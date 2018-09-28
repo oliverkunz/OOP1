@@ -16,6 +16,8 @@ public class A6 {
 				if (array[i] + array[j] == target) {
 					result[0] = array[i];
 					result[1] = array[j];
+					
+					return result;
 				}
 			}
 		}	
