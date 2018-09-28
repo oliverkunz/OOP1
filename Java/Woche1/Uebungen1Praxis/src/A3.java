@@ -17,7 +17,7 @@ public class A3 {
 				{10,0},
 				{5,0},
 		};
-		int restbetrag = (int)(d * 100);
+		int restbetrag = (int)Math.round(d * 100);
 		
 		while (restbetrag != 0) {
 			if (restbetrag >= 500) {
