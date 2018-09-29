@@ -13,17 +13,18 @@ public class A7_remove {
     }
 
     public static double[] remove(double[] list, int index) {
-	double[] longArray = new double[list.length - 1];
+	double[] newArray = new double[list.length - 1];
 
 	int j = 0;
-	for (int i = 0; i < longArray.length + 1; i++) {
+	for (int i = 0; i < newArray.length; i++) {
 	    if (j == index) {
-		j++;
-		continue;
+	    	j++;
+	    	i--;
 	    } else {
-		longArray[i] = list[j];
+		newArray[i] = list[j];
+		j++;
 	    }
 	}
-	return longArray;
+	return newArray;
     }
 }
