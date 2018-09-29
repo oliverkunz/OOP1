@@ -14,8 +14,6 @@ public class A9_bubblesort {
 				}
 			}
 		}
-		
-		
 		return list;
 	}
 	
@@ -33,5 +31,5 @@ public class A9_bubblesort {
 			}
 		}
 		return newArray;
-	    }
+	}
 }

@@ -18,5 +18,4 @@ public class A10_vectorLength {
 		double length = Math.sqrt(square);
 		return length;
 	}
-
 }

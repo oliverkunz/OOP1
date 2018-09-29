@@ -10,7 +10,6 @@ public class A11_minVector {
 				{2, 2.6, 5.6},
 		};
 		JOptionPane.showMessageDialog(null, Arrays.toString(minVector(vectors)));
-
 	}
 	public static double[] minVector(double[][] vectors) {
 		double[] shortVector = null;
@@ -36,6 +35,5 @@ public class A11_minVector {
 		
 		double length = Math.sqrt(square);
 		return length;
-	}
-	
+	}	
 }

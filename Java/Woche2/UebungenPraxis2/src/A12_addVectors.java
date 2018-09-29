@@ -19,5 +19,4 @@ public class A12_addVectors {
 		
 		return sumVectors;
 	}
-
 }
