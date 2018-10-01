@@ -22,7 +22,7 @@ public class Uebungen2_Oliver_Kunz {
 		System.out.println("Uebung_A11_minVector: " + Arrays.toString(minVector(new double[][] {{2.4, 5, 3},{2, 2.6, 5.6},})));
 		System.out.println("Uebung_A12_addVector: " + Arrays.toString(addVectors(new double[] {2, 7, 3}, new double[] {1, 5, 3.3})));
 		System.out.println("Uebung_A13_append: " + append("Hello", new char[] {' ','W','o','r','l','d','!'}));
-		System.out.println("Uebung_A14_appendBuilder: " + append("Hello", new char[] {' ','W','o','r','l','d','!'}));
+		System.out.println("Uebung_A14_appendBuilder: " + appendBuilder("Hello", new char[] {' ','W','o','r','l','d','!'}));
 		System.out.println("Uebung_A15_caesarChiffre " + caesarChiffre("Hello World!", 3));
 		System.out.println("Uebung_A16_removeVocals " + removeVocals("Schifffahrtsgesellschaft"));
 	}
