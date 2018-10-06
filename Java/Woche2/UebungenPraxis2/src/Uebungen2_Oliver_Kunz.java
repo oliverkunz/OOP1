@@ -251,7 +251,6 @@ public class Uebungen2_Oliver_Kunz {
 			}
 			result.append((char)charCode);
 		}
-		
 		return result.toString();
 	}
 	
