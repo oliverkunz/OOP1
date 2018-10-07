@@ -1,26 +1,30 @@
 
 public class Book {
 	
-	private String title;
 	private int ean;
+	private String title;
+	private Writer writer;
 	private int pages;
 	private int year;
-	private Writer writer;
-				
-	public Book(String title, int ean, int pages, int year, Writer writer) {
-		this.title = title;
+	
+	public Book(int ean, String title, Writer writer, int pages, int year) {
 		this.ean = ean;
+		this.title = title;
+		this.writer = writer;
 		this.pages = pages;
 		this.year = year;
-		this.writer = writer;
+	}
+
+	public int getEan() {
+		return ean;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
-	public int getEan() {
-		return ean;
+	public Writer getWriter() {
+		return writer;
 	}
 
 	public int getPages() {
@@ -30,9 +34,5 @@ public class Book {
 	public int getYear() {
 		return year;
 	}
-
-	public Writer getWriter() {
-		return writer;
-	}
-	
+		
 }

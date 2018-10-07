@@ -1,31 +1,38 @@
 
 public class Film {
 	
-	public String title;
-	public int ean;
-	public int length;
-	public Actor[] actors;
-		
-	public Film(String title, int ean, int length, Actor[] actors) {
-		this.title = title;
-		this.ean = ean;
-		this.length = length;
-		this.actors = actors;
-	}
+	private Actor[] actors;
+	private int ean;
+	private String title;
+	private String publisher;
+	private int length;
 	
-	public String getTitle() {
-		return title;
+	public Film(int ean, String title, String publisher, int length) {
+		super();
+		this.ean = ean;
+		this.title = title;
+		this.publisher = publisher;
+		this.length = length;
 	}
-	public int getEan() {
-		return ean;
-	}
-	public int getLength() {
-		return length;
-	}
+
 	public Actor[] getActors() {
 		return actors;
 	}
-	
-	
+
+	public int getEan() {
+		return ean;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public int getLength() {
+		return length;
+	}
 
 }

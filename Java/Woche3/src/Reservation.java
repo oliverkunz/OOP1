@@ -1,15 +1,14 @@
 import java.time.LocalDate;
 
-public class Lending {
-	
+public class Reservation {
 	private Customer customer;
 	private Object object;
-	private LocalDate startDate;
+	private LocalDate reservationDate;
 	
-	public Lending(Customer customer, Object object, LocalDate startDate) {
+	public Reservation(Customer customer, Object object, LocalDate reservationDate) {
 		this.customer = customer;
 		this.object = object;
-		this.startDate = startDate;
+		this.reservationDate = reservationDate;
 	}
 
 	public Customer getCustomer() {
@@ -28,12 +27,12 @@ public class Lending {
 		this.object = object;
 	}
 
-	public LocalDate getStartDate() {
-		return startDate;
+	public LocalDate getReservationDate() {
+		return reservationDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
-	}
-	
+	public void setReservationDate(LocalDate reservationDate) {
+		this.reservationDate = reservationDate;
+	}	
+
 }
