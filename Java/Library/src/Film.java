@@ -2,14 +2,14 @@ import java.util.Arrays;
 
 public final class Film {
 	
-	private final Actor[] actors;
-	private final long articelNumber;
+	private Actor[] actors;
+	private final long articleNumber;
 	private final String title;
 	private final String publisher;
 	private final int length;
 	
-	public Film(long articelNumber, String title, String publisher, int length) {
-		this.articelNumber = articelNumber;
+	public Film(long articleNumber, String title, String publisher, int length) {
+		this.articleNumber = articleNumber;
 		this.title = title;
 		this.publisher = publisher;
 		this.length = length;
@@ -20,7 +20,7 @@ public final class Film {
 	}
 
 	public long getarticelNumber() {
-		return articelNumber;
+		return articleNumber;
 	}
 
 	public String getTitle() {
@@ -34,10 +34,9 @@ public final class Film {
 	public int getLength() {
 		return length;
 	}
-
+	
 	public void addActor(Actor actor, int i) {
-		// TODO Auto-generated method stub
-		
+		// TO DO
 	}
 
 	@Override
@@ -51,7 +50,7 @@ public final class Film {
 		Film other = (Film) obj;
 		if (!Arrays.equals(actors, other.actors))
 			return false;
-		if (articelNumber != other.articelNumber)
+		if (articleNumber != other.articleNumber)
 			return false;
 		if (length != other.length)
 			return false;

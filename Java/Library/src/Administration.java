@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Administration {
 	private Object[] objects;
@@ -220,10 +221,25 @@ public class Administration {
 	}
 	
 	public LocalDate getLendingEndDate(Object object) {
-		
-		
-		
-		return null;
-		
+		LocalDate date = null;
+		for (Object lending : this.lendings)
+			if (object == ((Lending)lending).getObject()) {
+				date = (getLastLending(object).getStartDate().minusMonths(-1));
+			} else {
+				date = LocalDate.now();
+			}
+		return date;	
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
