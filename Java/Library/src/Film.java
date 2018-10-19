@@ -1,30 +1,18 @@
 import java.util.Arrays;
 
-public final class Film {
-	
+public final class Film extends DataObject{
 	private Actor[] actors;
-	private final long articleNumber;
-	private final String title;
 	private final String publisher;
 	private final int length;
 	
 	public Film(long articleNumber, String title, String publisher, int length) {
-		this.articleNumber = articleNumber;
-		this.title = title;
+		super(articleNumber, title);
 		this.publisher = publisher;
 		this.length = length;
 	}
-
+	
 	public Actor[] getActors() {
 		return actors;
-	}
-
-	public long getarticelNumber() {
-		return articleNumber;
-	}
-
-	public String getTitle() {
-		return title;
 	}
 
 	public String getPublisher() {
@@ -36,21 +24,25 @@ public final class Film {
 	}
 	
 	public void addActor(Actor actor, int i) {
-		// TO DO
+		this.actors[i] = actor;
 	}
 
 	@Override
-	public final boolean equals(Object obj) {
+	public String toString() {
+		return "Film [actors=" + Arrays.toString(actors) + ", publisher=" + publisher + ", length=" + length
+				+ ", getArticlenumber()=" + getArticlenumber() + ", getTitle()=" + getTitle() + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
 		if (!Arrays.equals(actors, other.actors))
-			return false;
-		if (articleNumber != other.articleNumber)
 			return false;
 		if (length != other.length)
 			return false;
@@ -58,11 +50,6 @@ public final class Film {
 			if (other.publisher != null)
 				return false;
 		} else if (!publisher.equals(other.publisher))
-			return false;
-		if (title == null) {
-			if (other.title != null)
-				return false;
-		} else if (!title.equals(other.title))
 			return false;
 		return true;
 	}

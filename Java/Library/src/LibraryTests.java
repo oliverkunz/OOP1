@@ -19,7 +19,7 @@ class LibraryTests {
 	@BeforeEach
 	private void setUp() {
 		admin = TestSetUp.testSetUp();
-		objects = admin.getObjects();
+		objects = admin.getDataObjects();
 		lendings = admin.getLendings();
 	}
 	
@@ -68,47 +68,47 @@ class LibraryTests {
 	
 	@Test
 	void testAvailableBook() {
-		Assertions.assertFalse(admin.isStuffAvailable((Book)objects[1]));
+		Assertions.assertFalse(admin.isBookAvailable((Book)objects[1]));
 	}
 	
 	@Test
 	void testAvailableBook2() {
-		Assertions.assertFalse(admin.isStuffAvailable((Book)objects[2]));
+		Assertions.assertFalse(admin.isBookAvailable((Book)objects[2]));
 	}
 	
 	@Test
 	void testAvailableBook3() {
-		Assertions.assertFalse(admin.isStuffAvailable((Book)objects[3]));
+		Assertions.assertFalse(admin.isBookAvailable((Book)objects[3]));
 	}
 	
 	@Test
 	void testAvailableMusic() {
-		Assertions.assertFalse(admin.isStuffAvailable((Music)objects[7]));
+		Assertions.assertFalse(admin.isMusicAvailable((Music)objects[7]));
 	}
 	
 	@Test
 	void testAvailableMusic2() {
-		Assertions.assertFalse(admin.isStuffAvailable((Music)objects[8]));
+		Assertions.assertFalse(admin.isMusicAvailable((Music)objects[8]));
 	}
 	
 	@Test
 	void testAvailableFilm() {
-		Assertions.assertFalse(admin.isStuffAvailable((Film)objects[9]));
+		Assertions.assertFalse(admin.isFilmAvailable((Film)objects[9]));
 	}
 	
 	@Test
 	void testAvailableFilm2() {
-		Assertions.assertFalse(admin.isStuffAvailable((Film)objects[10]));
+		Assertions.assertFalse(admin.isFilmAvailable((Film)objects[10]));
 	}
 	
 	@Test
 	void testAvailableJournal() {
-		Assertions.assertFalse(admin.isStuffAvailable((Journal)objects[11]));
+		Assertions.assertFalse(admin.isJournalAvailable((Journal)objects[11]));
 	}
 	
 	@Test
 	void testAvailableJournal2() {
-		Assertions.assertFalse(admin.isStuffAvailable((Journal)objects[12]));
+		Assertions.assertFalse(admin.isJournalAvailable((Journal)objects[12]));
 	}
 	
 	@Test
@@ -149,23 +149,5 @@ class LibraryTests {
 		Assertions.assertNotEquals(new Journal(1, "","",0), new Journal(1, "","",0));
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

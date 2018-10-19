@@ -1,23 +1,12 @@
 
-public final class Music {
-	private final long articelNumber;
-	private final String title;
+public final class Music extends DataObject {
 	private final String band;
 	private final int length;
 	
-	public Music(long articelNumber, String title, String band, int length) {
-		this.articelNumber = articelNumber;
-		this.title = title;
+	public Music(long articleNumber, String title, String band, int length) {
+		super(articleNumber, title);
 		this.band = band;
 		this.length = length;
-	}
-
-	public long getArticelNumber() {
-		return articelNumber;
-	}
-
-	public String getTitle() {
-		return title;
 	}
 
 	public String getBand() {
@@ -29,16 +18,20 @@ public final class Music {
 	}
 
 	@Override
-	public final boolean equals(Object obj) {
+	public String toString() {
+		return "Music [band=" + band + ", length=" + length + ", getArticlenumber()=" + getArticlenumber()
+				+ ", getTitle()=" + getTitle() + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Music other = (Music) obj;
-		if (articelNumber != other.articelNumber)
-			return false;
 		if (band == null) {
 			if (other.band != null)
 				return false;
@@ -46,12 +39,7 @@ public final class Music {
 			return false;
 		if (length != other.length)
 			return false;
-		if (title == null) {
-			if (other.title != null)
-				return false;
-		} else if (!title.equals(other.title))
-			return false;
 		return true;
 	}
-	
+
 }

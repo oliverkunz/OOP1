@@ -1,14 +1,13 @@
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Administration {
-	private Object[] objects;
+	private DataObject[] objects;
 	private Lending[] lendings;
 	private Reservation[] reservations;
 	private Customer[] customers;
 
 	public Administration() {
-		objects = new Object[20];
+		objects = new DataObject[20];
 		lendings = new Lending[20];
 		reservations = new Reservation[20];
 		customers = new Customer[20];
@@ -22,7 +21,7 @@ public class Administration {
 		return reservations;
 	}
 
-	public Object[] getObjects() {
+	public DataObject[] getDataObjects() {
 		return objects;
 	}
 
@@ -30,7 +29,7 @@ public class Administration {
 		return customers;
 	}
 
-	public void printObjects() {
+	public void printDataObjects() {
 		for (Object e : objects) {
 			System.out.println(e.toString());
 		}
@@ -44,7 +43,7 @@ public class Administration {
 	
 	public static Administration testSetUp() {
 		Administration admin = new Administration();
-		Object[] objects = admin.getObjects();
+		Object[] objects = admin.getDataObjects();
 		int counter = 1;
 		Writer[] w = new Writer[7];
 		w[0] = new Writer("Schreiberin", "Barbara");
@@ -115,11 +114,32 @@ public class Administration {
 		admin.getReservations()[1] = new Reservation(leser, objects[7], LocalDate.of(2018, 10, 2));
 		return admin;
 	}
+	public DataObject findDataObject(int articleNumber) {
+		for (DataObject dataObject : this.objects) {
+			if (dataObject instanceof DataObject) {
+				if (articleNumber == ((DataObject)dataObject).getArticlenumber()) {
+					return (DataObject) dataObject;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public DataObject findDataObject(String title) {
+		for (DataObject dataObject : this.objects) {
+			if (dataObject instanceof DataObject) {
+				if (title == ((DataObject)dataObject).getTitle()) {
+					return (DataObject) dataObject;
+				}
+			}
+		}
+		return null;
+	}
 	
 	public Journal findJournal(long articleNumber) {
-		for (Object journal : this.objects) {
+		for (DataObject journal : this.objects) {
 			if (journal instanceof Journal) {
-				if (articleNumber == ((Journal)journal).getArticleNumber()) {
+				if (articleNumber == ((Journal)journal).getArticlenumber()) {
 					return (Journal) journal;
 				}
 			}
@@ -128,7 +148,7 @@ public class Administration {
 	}
 	
 	public Journal findJournal(String title) {
-		for (Object journal : this.objects) {
+		for (DataObject journal : this.objects) {
 			if (journal instanceof Journal) {
 				if (title == ((Journal)journal).getTitle()) {
 					return (Journal) journal;
@@ -139,7 +159,7 @@ public class Administration {
 	}
 	
 	public Book findBook(String title) {
-		for (Object book : this.objects) {
+		for (DataObject book : this.objects) {
 			if (book instanceof Book) {
 				if (title == ((Book)book).getTitle()) {
 					return (Book) book;
@@ -150,7 +170,7 @@ public class Administration {
 	}
 	
 	public Book findBook(Writer writer) {
-		for (Object book : this.objects) {
+		for (DataObject book : this.objects) {
 			if (book instanceof Book) {
 				if (writer == ((Book)book).getWriter()) {
 					return (Book) book;
@@ -161,7 +181,7 @@ public class Administration {
 	}
 	
 	public Film findFilm(String title) {
-		for (Object film : this.objects) {
+		for (DataObject film : this.objects) {
 			if (film instanceof Film) {
 				if (title == ((Film)film).getTitle()) {
 					return (Film) film;
@@ -172,7 +192,7 @@ public class Administration {
 	}
 	
 	public Film findFilm(Actor actor[]) {
-		for (Object film : this.objects) {
+		for (DataObject film : this.objects) {
 			if (film instanceof Film) {
 				if (actor == ((Film)film).getActors()) {
 					return (Film) film;
@@ -183,7 +203,7 @@ public class Administration {
 	}
 	
 	public Music findMusic(String band) {
-		for (Object music : this.objects) {
+		for (DataObject music : this.objects) {
 			if (music instanceof Music) {
 				if (band == ((Music)music).getBand()) {
 					return (Music) music;
@@ -193,42 +213,51 @@ public class Administration {
 		return null;
 	}
 	
-	private Lending getLastLending(Object object) {
-        Lending lastLending = null;
-        for (Lending lending : lendings) {
-            if (object == lending.getObject()) {
-                if (
-                    lastLending == null ||
-                    lending.getStartDate().isAfter(lastLending.getStartDate())
-                ) {
-                    lastLending = lending;
-                }
-            }
-        }
-        return lastLending;
-    }
-	
-	public boolean isStuffAvailable(Object object) {
-		for (Object stuff : this.lendings) {
-			if (object == ((Lending)stuff).getObject()) {
-				 return true;
-			}
-			if((getLastLending(object)).getReturnDate() != null) {
-				return true;
-			}
-		}	
-		return false;
+	public boolean isBookAvailable(Book book) {
+		return this.isObjectAvailable(book);
 	}
 	
-	public LocalDate getLendingEndDate(Object object) {
-		LocalDate date = null;
-		for (Object lending : this.lendings)
-			if (object == ((Lending)lending).getObject()) {
-				date = (getLastLending(object).getStartDate().minusMonths(-1));
-			} else {
-				date = LocalDate.now();
-			}
-		return date;	
+	public boolean isJournalAvailable(Journal journal) {
+		return this.isObjectAvailable(journal);
 	}
+	
+	public boolean isFilmAvailable(Film film) {
+		return this.isObjectAvailable(film);
+	}
+	
+	public boolean isMusicAvailable(Music music) {
+		return this.isObjectAvailable(music);
+	}
+	
+	private boolean isObjectAvailable(DataObject object) {
+		for(Lending lending : this.lendings) {
+			if(lending.getObject().equals(object) && lending.getReturnDate() == null) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public LocalDate getLendingEndDate(DataObject object) {
+		Lending lastLending = null;
+		
+		for(Lending lending : lendings) {
+			if(lending.getObject().equals(object) && (lastLending == null || lending.getStartDate().isAfter(lastLending.getStartDate()))) {
+				lastLending = lending;
+			}
+		}
+		
+		if(lastLending != null && lastLending.getReturnDate() != null) {
+			return lastLending.getReturnDate();
+		}
+		
+		if(lastLending != null && lastLending.getStartDate() != null) {
+			return lastLending.getStartDate().minusMonths(-1);
+		}		
+		
+		return LocalDate.now();
+	}
+	
 }
 

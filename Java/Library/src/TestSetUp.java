@@ -5,7 +5,7 @@ public class TestSetUp {
 
 	public static Administration testSetUp() {
 		Administration admin = new Administration();
-		Object[] objects = admin.getObjects();
+		Object[] objects = admin.getDataObjects();
 		int counter = 1;
 		Writer[] w = new Writer[7];
 		w[0] = new Writer("Schreiberin", "Barbara");

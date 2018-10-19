@@ -1,59 +1,39 @@
 
-public final class Book {
+
+public final class Book extends PrintMedium {
 	
-	private final long articelNumber;
-	private final String title;
-	private final Writer writer;
-	private final int pages;
-	private final int year;
+	private Writer writer;
+	private int year;
 	
-	public Book(long articelNumber, String title, Writer writer, int pages, int year) {
-		this.articelNumber = articelNumber;
-		this.title = title;
+	public Book(long articleNumber, String title, Writer writer, int pages, int year) {
+		super(articleNumber, title, pages);
 		this.writer = writer;
-		this.pages = pages;
 		this.year = year;
-	}
-
-	public long getarticelNumber() {
-		return articelNumber;
-	}
-
-	public String getTitle() {
-		return title;
 	}
 
 	public Writer getWriter() {
 		return writer;
 	}
 
-	public int getPages() {
-		return pages;
-	}
-
 	public int getYear() {
 		return year;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Book [writer=" + writer + ", year=" + year + ", getPages()=" + getPages() + ", toString()="
+				+ super.toString() + ", getArticlenumber()=" + getArticlenumber() + "]";
+	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Book other = (Book) obj;
-		if (articelNumber != other.articelNumber)
-			return false;
-		if (pages != other.pages)
-			return false;
-		if (title == null) {
-			if (other.title != null)
-				return false;
-		} else if (!title.equals(other.title))
-			return false;
 		if (writer == null) {
 			if (other.writer != null)
 				return false;
@@ -63,5 +43,5 @@ public final class Book {
 			return false;
 		return true;
 	}
-
+	
 }
