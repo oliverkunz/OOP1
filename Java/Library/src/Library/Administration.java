@@ -1,3 +1,4 @@
+package Library;
 import java.time.LocalDate;
 
 public class Administration {
@@ -43,7 +44,7 @@ public class Administration {
 	
 	public static Administration testSetUp() {
 		Administration admin = new Administration();
-		Object[] objects = admin.getDataObjects();
+		DataObject[] objects = admin.getDataObjects();
 		int counter = 1;
 		Writer[] w = new Writer[7];
 		w[0] = new Writer("Schreiberin", "Barbara");
@@ -113,8 +114,9 @@ public class Administration {
 		admin.getReservations()[0] = new Reservation(leser, objects[12], LocalDate.of(2018, 10, 1));
 		admin.getReservations()[1] = new Reservation(leser, objects[7], LocalDate.of(2018, 10, 2));
 		return admin;
+		
 	}
-	public DataObject findDataObject(int articleNumber) {
+	public DataObject findDataObject(long articleNumber) {
 		for (DataObject dataObject : this.objects) {
 			if (dataObject instanceof DataObject) {
 				if (articleNumber == ((DataObject)dataObject).getArticlenumber()) {
@@ -191,11 +193,13 @@ public class Administration {
 		return null;
 	}
 	
-	public Film findFilm(Actor actor[]) {
+	public Film findFilm(Actor searchActor) {
 		for (DataObject film : this.objects) {
 			if (film instanceof Film) {
-				if (actor == ((Film)film).getActors()) {
-					return (Film) film;
+				for(Actor actor : ((Film) film).getActors()) {
+					if(actor.equals(searchActor)) {
+						return (Film)film;
+					}
 				}
 			}
 		}
@@ -231,7 +235,7 @@ public class Administration {
 	
 	private boolean isObjectAvailable(DataObject object) {
 		for(Lending lending : this.lendings) {
-			if(lending.getObject().equals(object) && lending.getReturnDate() == null) {
+			if(lending.getDataObject().equals(object) && lending.getReturnDate() == null) {
 				return false;
 			}
 		}
@@ -243,7 +247,7 @@ public class Administration {
 		Lending lastLending = null;
 		
 		for(Lending lending : lendings) {
-			if(lending.getObject().equals(object) && (lastLending == null || lending.getStartDate().isAfter(lastLending.getStartDate()))) {
+			if(lending.getDataObject().equals(object) && (lastLending == null || lending.getStartDate().isAfter(lastLending.getStartDate()))) {
 				lastLending = lending;
 			}
 		}

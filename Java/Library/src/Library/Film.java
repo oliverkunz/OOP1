@@ -1,7 +1,8 @@
+package Library;
 import java.util.Arrays;
 
 public final class Film extends DataObject{
-	private Actor[] actors;
+	private Actor[] actors = new Actor[3];
 	private final String publisher;
 	private final int length;
 	

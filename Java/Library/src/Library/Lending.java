@@ -1,51 +1,47 @@
+package Library;
 import java.time.LocalDate;
 
 public class Lending {
 	
-	private Customer customer;
+	private Customer borrower;
 	private Object object;
 	private LocalDate startDate;
 	private LocalDate returnDate;
 	
-	public Lending(Customer customer, Object object, LocalDate startDate) {
-		this.customer = customer;
-		this.object = object;
+	public Lending(Customer borrower, Object objects, LocalDate startDate) {
+		this.borrower = borrower;
+		this.object = objects;
 		this.startDate = startDate;
 		
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public Customer getBorrower() {
+		return borrower;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	public Object getObject() {
+	public Object getDataObject() {
 		return object;
-	}
-
-	public void setObject(Object object) {
-		this.object = object;
 	}
 
 	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
-	}
-
 	public LocalDate getReturnDate() {
 		return returnDate;
 	}
-
+	
 	public void setReturnDate(LocalDate returnDate) {
 		this.returnDate = returnDate;
 	}
+	
+	public LocalDate getTimeLimit() {
+		return this.getStartDate().minusMonths(-1);
+	}
 
-	
-	
+	@Override
+	public String toString() {
+		return "Lending [borrower=" + borrower + ", object=" + object + ", startDate=" + startDate + ", returnDate="
+				+ returnDate + "]";
+	}	
 }

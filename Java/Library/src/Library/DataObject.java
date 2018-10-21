@@ -1,3 +1,4 @@
+package Library;
 
 public class DataObject {
 	private long articlenumber;

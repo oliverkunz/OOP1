@@ -1,3 +1,4 @@
+package Library;
 
 public class PrintMedium extends DataObject {
 	private int pages;
