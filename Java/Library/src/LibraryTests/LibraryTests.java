@@ -27,126 +27,151 @@ class LibraryTests {
 	//----------------------------Uebung5
 	
 	@Test
-	void testFindJournal() {
+	void FindJournal() {
 		assertEquals(admin.findJournal(17), objects[16]);
 	}
 	
 	@Test
-	void testFindBook() {
+	void FindBook() {
 		Book obj = (Book)admin.findBook("Behind the Moon");
 		Assertions.assertEquals(obj, objects[2]);
 	}
 	
 	@Test
-	void testFindMusic() {
+	void FindMusic() {
 		Music obj = (Music)admin.findMusic("Abba");
 		Assertions.assertEquals(obj, objects[7]);
 	}
 	
 	@Test
-	void testFindJournal2() {
+	void FindJournal2() {
 		Journal obj = (Journal)admin.findJournal("Nature");
 		Assertions.assertEquals(obj, objects[11]);
 	}
 	
 	@Test
-	void testFindFilm() {
+	void FindFilm() {
 		Film obj = (Film)admin.findFilm("Star Wars I");
 		Assertions.assertEquals(obj, objects[9]);
 	}
 	
 	@Test
-	void testFindBook2() {
-		assertEquals(admin.findBook(new Writer("Schreiberin", "Barbara")), objects[0]);
+	void FindBook2() {
+		assertEquals(admin.findBook(new Writer("Schreiberin", "Barbara")),objects[0]);
 	}
 	
-	/*@Test
-	void testFindFilm2() {
-		assertEquals(admin.findFilm(new Actor("Portmann", "Natalie")), objects[9]);
-	}*/
+	@Test
+	void FindFilm2() {
+		assertEquals(admin.findFilm(new Actor("Portman", "Natalie")), objects[9]);
+	}
 	
 	@Test
-	void testAvailableBook() {
+	void AvailableBook() {
 		assertFalse(admin.isBookAvailable((Book)objects[1]));
 	}
 	
 	@Test
-	void testAvailableBook2() {
+	void AvailableBook2() {
 		assertFalse(admin.isBookAvailable((Book)objects[2]));
 	}
 	
 	@Test
-	void testAvailableBook3() {
+	void AvailableBook3() {
 		assertTrue(admin.isBookAvailable((Book)objects[3]));
 	}
 	
 	@Test
-	void testAvailableMusic() {
+	void AvailableMusic() {
 		assertFalse(admin.isMusicAvailable((Music)objects[7]));
 	}
 	
 	@Test
-	void testAvailableMusic2() {
+	void AvailableMusic2() {
 		assertFalse(admin.isMusicAvailable((Music)objects[8]));
 	}
 	
 	@Test
-	void testAvailableFilm() {
+	void AvailableFilm() {
 		Assertions.assertFalse(admin.isFilmAvailable((Film)objects[9]));
 	}
 	
 	@Test
-	void testAvailableFilm2() {
+	void AvailableFilm2() {
 		Assertions.assertFalse(admin.isFilmAvailable((Film)objects[10]));
 	}
 	
 	@Test
-	void testAvailableJournal() {
+	void AvailableJournal() {
 		Assertions.assertFalse(admin.isJournalAvailable((Journal)objects[11]));
 	}
 	
 	@Test
-	void testAvailableJournal2() {
+	void AvailableJournal2() {
 		Assertions.assertFalse(admin.isJournalAvailable((Journal)objects[12]));
 	}
 	
 	@Test
-	void testGetLendingEndDateBook() {
+	void GetLendingEndDateBook() {
 		assertEquals(admin.getLendingEndDate((Book) objects[0]), LocalDate.now());
 	}
 	
 	@Test
-	void testGetLendingEndDateBook2() {
+	void GetLendingEndDateBook2() {
 		assertEquals(admin.getLendingEndDate((Book) objects[1]), LocalDate.of(2018, 11, 1));
 	}
 	
 	@Test
-	void testGetLendingEndDateMusic() {
+	void GetLendingEndDateMusic() {
 		assertEquals(admin.getLendingEndDate((Music) objects[7]), LocalDate.of(2018, 10, 23));
 	}
 	
 	@Test
-	void testGetLendingEndDateFilm() {
+	void GetLendingEndDateFilm() {
 		assertEquals(admin.getLendingEndDate((Film) objects[10]), LocalDate.of(2018, 10, 24));
 	}
 	
 	@Test
-	void testImmutableBook() {
-		assertNotEquals(new Book(1, "", new Writer("", ""), 0, 0), new Book(1, "", new Writer("", ""), 0, 0));
+	void BookInheritance() {
+		assertTrue(objects[0] instanceof PrintMedium);
 	}
 	
 	@Test
-	void testImmutableFilm() {
-		assertNotEquals(new Film(1, "","",0), new Film(1, "","",0));
+	void BookInheritance2() {
+		assertTrue(objects[0] instanceof DataObject);
 	}
 	
-	void testImmutableMusic() {
-		assertNotEquals(new Music(1, "","",0), new Music(1, "","",0));
+	@Test
+	void JournalInheritance() {
+		assertTrue(objects[11] instanceof PrintMedium);
 	}
 	
-	void testImmutableJournal() {
-		assertNotEquals(new Journal(1, "","",0), new Journal(1, "","",0));
+	@Test
+	void FilmInheritance() {
+		assertTrue(objects[9] instanceof DataObject);
 	}
+	
+	@Test
+	void MusicInheritance() {
+		assertTrue(new Music(1234, "Survive", "Don Diablo", 200) instanceof DataObject);
+	}
+	
+	@Test
+	void WriterInheritance() {
+		assertTrue(new Writer("Oliver", "Kunz") instanceof Person);
+	}
+	
+	@Test
+	void CustomerInheritance() {
+		assertTrue(new Customer("Kunz", "Oliver", "oliver.kunz@test.com") instanceof Person);
+	}
+	
+	@Test
+	void ActorInheritance() {
+		assertTrue(new Actor("Kunz", "Oliver") instanceof Person);
+	}
+	
+	
+	
 }
 
 

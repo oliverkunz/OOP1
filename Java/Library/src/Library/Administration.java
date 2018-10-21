@@ -172,13 +172,12 @@ public class Administration {
 	}
 	
 	public Book findBook(Writer writer) {
-		for (DataObject book : this.objects) {
-			if (book instanceof Book) {
-				if (writer == ((Book)book).getWriter()) {
-					return (Book) book;
-				}
+		for(DataObject book : this.objects) {
+			if(book instanceof Book && ((Book) book).getWriter().equals(writer)) {
+				return (Book)book;
 			}
 		}
+		
 		return null;
 	}
 	
