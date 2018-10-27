@@ -1,50 +1,72 @@
 package library.admin;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import library.data.Book;
+import library.data.Customer;
 import library.data.DataObject;
 import library.data.Film;
+import library.data.Item;
+import library.data.Item.State;
 import library.data.Journal;
 import library.data.Lending;
 import library.data.Music;
 
 public class LendingManager {
-	private Lending[] lendings;
+	private List<Lending> lendings;
 	private int lendingCounter = 0;
 	
-	
-	public boolean isBookAvailable(Book book) {
-		return this.isObjectAvailable(book);
+	public LendingManager() {
+		this.lendings = new ArrayList<>();
 	}
 	
-	public boolean isJournalAvailable(Journal journal) {
-		return this.isObjectAvailable(journal);
+	public Lending[] getLendings() {
+		return (Lending[]) this.lendings.toArray();
 	}
 	
-	public boolean isFilmAvailable(Film film) {
-		return this.isObjectAvailable(film);
-	}
-	
-	public boolean isMusicAvailable(Music music) {
-		return this.isObjectAvailable(music);
-	}
-	
-	private boolean isObjectAvailable(DataObject object) {
-		for(Lending lending : this.lendings) {
-			if(lending.getDataObject().equals(object) && lending.getReturnDate() == null) {
-				return false;
+	public boolean isItemAvailable(Item item) {
+		boolean lentOut = false;
+		for (Lending lending : lendings) {
+			if (lending.getItem().equals(item)) {
+				lentOut = true;
+				if (lending.getItem().isAvailable())		
+				return true;
 			}
 		}
-		
+		if (lentOut == false) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean addLending(Customer customer, Item item, LocalDate date) {
+		if (item.isAvailable()) {
+			this.lendings.add(new Lending(customer, item, date));
+		} else {
+			return false;
+		}
 		return true;
 	}
 	
-	public LocalDate getLendingEndDate(DataObject object) {
+	public boolean returnItem(Item item, LocalDate date) {
+		for(Lending lending : this.lendings) {
+			if(lending.getItem().equals(item) && lending.getReturnDate() == null) {
+				lending.setReturnDate(date);
+				lending.getItem().setState(State.AVAILABLE);
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	public LocalDate getLendingEndDate(Item item) {
 		Lending lastLending = null;
 		
 		for(Lending lending : lendings) {
-			if(lending.getDataObject().equals(object) && (lastLending == null || lending.getStartDate().isAfter(lastLending.getStartDate()))) {
+			if(lending.getItem().equals(item) && (lastLending == null || lending.getStartDate().isAfter(lastLending.getStartDate()))) {
 				lastLending = lending;
 			}
 		}

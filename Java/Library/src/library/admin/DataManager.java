@@ -1,6 +1,10 @@
 package library.admin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import library.data.*;
+import library.util.Util;
 
 public class DataManager {
 	private DataObject[] dataObjects;
@@ -43,6 +47,16 @@ public class DataManager {
 		return this.journalItems;
 	}
 	
+	public Item isDataObjectAvailable(DataObject obj) {
+		Item[] items = Util.merge(bookItems, musicItems, filmItems, journalItems);
+		for (Item item : items) {
+			if(item.getDataObject().equals(obj)) {
+				return item;
+			}	
+		}
+		return null;
+	}
+	
 	public DataObject findDataObject(long articleNumber) {
 		for (DataObject dataObject : this.dataObjects) {
 			if (dataObject instanceof DataObject) {
@@ -65,82 +79,53 @@ public class DataManager {
 		return null;
 	}
 	
-	public Journal findJournal(long articleNumber) {
-		for (DataObject journal : this.dataObjects) {
-			if (journal instanceof Journal) {
-				if (articleNumber == ((Journal)journal).getArticlenumber()) {
-					return (Journal) journal;
-				}
-			}
-		}
-		return null;
-	}
-	
-	public Journal findJournal(String title) {
-		for (DataObject journal : this.dataObjects) {
-			if (journal instanceof Journal) {
-				if (title == ((Journal)journal).getTitle()) {
-					return (Journal) journal;
-				}
-			}
-		}
-		return null;
-	}
-	
-	public Book findBook(String title) {
-		for (DataObject book : this.dataObjects) {
-			if (book instanceof Book) {
-				if (title == ((Book)book).getTitle()) {
-					return (Book) book;
-				}
-			}
-		}
-		return null;
-	}
-	
-	public Book findBook(Writer writer) {
-		for(DataObject book : this.dataObjects) {
-			if(book instanceof Book && ((Book) book).getWriter().equals(writer)) {
-				return (Book)book;
-			}
-		}
+	public long[] findItems(String title) {
+		List<Long> itemIds = new ArrayList<>();
 		
-		return null;
+		Item[] items = Util.merge(bookItems, musicItems, filmItems, journalItems);
+		for (Item item : items) {
+			if (item.getDataObject().getTitle().equals(title)) {
+				itemIds.add(item.getId());
+			}
+		}
+		return Util.listToArray(itemIds);
 	}
 	
-	public Film findFilm(String title) {
-		for (DataObject film : this.dataObjects) {
-			if (film instanceof Film) {
-				if (title == ((Film)film).getTitle()) {
-					return (Film) film;
+	
+	
+	public long[] findBookItems(Writer writer) {
+		List<Long> itemIds = new ArrayList<>();
+		
+		for (BookItem item : this.bookItems) {
+			if (item.getBook().getWriter().equals(writer)) {
+				itemIds.add(item.getId());
+			}
+		}
+		return Util.listToArray(itemIds);
+	}
+	
+	public long[] findFilmItems(Actor actor) {
+		List<Long> itemIds = new ArrayList<>();
+		
+		for (FilmItem item : this.filmItems) {
+			for(Actor itemActor : item.getFilm().getActors()) {
+				if(itemActor != null && itemActor.equals(actor)) {
+					itemIds.add(item.getId());
 				}
 			}
 		}
-		return null;
+		return Util.listToArray(itemIds);
 	}
-	
-	public Film findFilm(Actor searchActor) {
-		for (DataObject film : this.dataObjects) {
-			if (film instanceof Film) {
-				for(Actor actor : ((Film) film).getActors()) {
-					if(actor.equals(searchActor)) {
-						return (Film)film;
-					}
-				}
+		
+	public long[] findMusicItems(String band) {
+		List<Long> itemIds = new ArrayList<>();
+			
+		for (MusicItem item : this.musicItems) {
+			if (item.getMusic().getBand().equals(band)) {
+				itemIds.add(item.getId());
 			}
 		}
-		return null;
-	}
+		return Util.listToArray(itemIds);
+	}	
 	
-	public Music findMusic(String band) {
-		for (DataObject music : this.dataObjects) {
-			if (music instanceof Music) {
-				if (band == ((Music)music).getBand()) {
-					return (Music) music;
-				}
-			}
-		}
-		return null;
-	}
-
 }

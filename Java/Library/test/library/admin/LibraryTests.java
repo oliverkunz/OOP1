@@ -5,6 +5,7 @@ import library.data.Book;
 import library.data.Customer;
 import library.data.DataObject;
 import library.data.Film;
+import library.data.Item;
 import library.data.Journal;
 import library.data.Lending;
 import library.data.Music;
@@ -44,7 +45,7 @@ class LibraryTests {
 	
 	@Test
 	void FindBook() {
-		Book obj = (Book)admin.findBook("Behind the Moon");
+		Item obj = admin.findItems("Behind the Moon");
 		Assertions.assertEquals(obj, objects[2]);
 	}
 	
@@ -68,7 +69,7 @@ class LibraryTests {
 	
 	@Test
 	void FindBook2() {
-		assertEquals(admin.findBook(new Writer("Schreiberin", "Barbara")),objects[0]);
+		assertEquals(admin.findBookItems(new Writer("Schreiberin", "Barbara")),objects[0]);
 	}
 	
 	@Test

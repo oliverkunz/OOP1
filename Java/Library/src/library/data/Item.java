@@ -3,11 +3,18 @@ package library.data;
 public class Item {
 	private long id;
 	private State state;
+	private DataObject object;
 	private Lending lending;
 	
 	public Item(long id) {
 		this.id = id;
+		this.object = object;
+		
 		state = State.AVAILABLE;
+	}
+	
+	public DataObject getDataObject() {
+		return object;
 	}
 	
 	public boolean isAvailable() {

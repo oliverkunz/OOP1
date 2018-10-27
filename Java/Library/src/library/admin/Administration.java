@@ -2,8 +2,15 @@ package library.admin;
 
 import java.time.LocalDate;
 
+import library.data.Actor;
 import library.data.Book;
+import library.data.BookItem;
+import library.data.Customer;
 import library.data.DataObject;
+import library.data.FilmItem;
+import library.data.Item;
+import library.data.JournalItem;
+import library.data.MusicItem;
 import library.data.Writer;
 
 public class Administration {
@@ -31,25 +38,59 @@ public class Administration {
 	}
 	
 	public BookItem[] getBookItems() {
-		return dataManager.getBookItems;
+		return dataManager.getBookItems();
 	}
 	
-	public Book findBook(Writer writer) {
-		return dataManager.findBook(writer);
+	public FilmItem[] getFilmItems() {
+		return dataManager.getFilmItems();
 	}
+	
+	public MusicItem[] getMusicItems() {
+		return dataManager.getMusicItems();
+	}
+	
+	public JournalItem[] getJournalItems() {
+		return dataManager.getJournalItems();
+	}
+	
+	public long[] findBookItems(Writer writer) {
+		return dataManager.findBookItems(writer);
+	}
+	
+	public long[] findMusicItems(String string) {
+		return dataManager.findMusicItems(string);
+	}
+	
 	public DataObject findDataObject(long ean) {
 		return dataManager.findDataObject(ean);
 	}
 	
-	public LocalDate getLendingEndDate(DataObject date) {
-		return lendingManager.getLendingEndDate(date);
+	public DataObject findDataObject(String title) {
+		return dataManager.findDataObject(title);
 	}
 	
-	public boolean isBookAvailable(Book book) {
-		return lendingManager.isBookAvailable(book);
+	public long[] findItems(String title) {
+		return dataManager.findItems(title);
 	}
 	
-
+	public long[] findFilmItems(Actor actor) {
+		return dataManager.findFilmItems(actor);
+	}
+	
+	public boolean isItemAvailable(Item item) {
+		return lendingManager.isItemAvailable(item);
+	}
+	
+	public LocalDate getLendingEndDate(Item item) {
+		return lendingManager.getLendingEndDate(item);
+	}
+	
+	public void addLending(Customer customer, Item item, LocalDate date) {
+		lendingManager.addLending(customer, item, date);
+	}
+	public void returnItem(Item item, LocalDate date) {
+		lendingManager.returnItem(item, date);
+	}
 
 /*public class Administration {
 	private DataObject[] objects;
