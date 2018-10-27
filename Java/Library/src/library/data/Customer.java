@@ -1,4 +1,4 @@
-package Library;
+package library.data;
 
 public class Customer extends Person {
 	private String email;

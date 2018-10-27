@@ -1,5 +1,16 @@
-package LibraryTests;
-import Library.*;
+package library.admin;
+import library.admin.Administration;
+import library.data.Actor;
+import library.data.Book;
+import library.data.Customer;
+import library.data.DataObject;
+import library.data.Film;
+import library.data.Journal;
+import library.data.Lending;
+import library.data.Music;
+import library.data.Person;
+import library.data.PrintMedium;
+import library.data.Writer;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;

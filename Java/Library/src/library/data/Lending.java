@@ -1,16 +1,16 @@
-package Library;
+package library.data;
 import java.time.LocalDate;
 
 public class Lending {
 	
 	private Customer borrower;
-	private Object object;
+	private Item item;
 	private LocalDate startDate;
 	private LocalDate returnDate;
 	
-	public Lending(Customer borrower, Object objects, LocalDate startDate) {
+	public Lending(Customer borrower, Item item, LocalDate startDate) {
 		this.borrower = borrower;
-		this.object = objects;
+		this.item = item;
 		this.startDate = startDate;
 		
 	}
@@ -19,8 +19,8 @@ public class Lending {
 		return borrower;
 	}
 
-	public Object getDataObject() {
-		return object;
+	public Item getItem() {
+		return item;
 	}
 
 	public LocalDate getStartDate() {
@@ -41,7 +41,9 @@ public class Lending {
 
 	@Override
 	public String toString() {
-		return "Lending [borrower=" + borrower + ", object=" + object + ", startDate=" + startDate + ", returnDate="
+		return "Lending [borrower=" + borrower + ", item=" + item + ", startDate=" + startDate + ", returnDate="
 				+ returnDate + "]";
-	}	
+	}
+
+	
 }

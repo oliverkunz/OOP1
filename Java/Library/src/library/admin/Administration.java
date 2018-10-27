@@ -1,10 +1,97 @@
-package LibraryTests;
-import Library.*;
+package library.admin;
 
 import java.time.LocalDate;
 
-public class TestSetUp {
+import library.data.Book;
+import library.data.DataObject;
+import library.data.Writer;
 
+public class Administration {
+	private LendingManager lendingManager;
+	private DataManager dataManager;
+	private DataObject[] objects;
+	
+	private static Administration instance;
+	
+	private Administration() {
+		this.lendingManager = new LendingManager();
+		this.dataManager = new DataManager();
+	}
+	
+	public static Administration getInstance()
+	{
+		if (instance == null) {
+			instance = new Administration();
+		}
+		return instance;
+	}
+	
+	public DataObject[] getDataObjects() {
+		return objects;
+	}
+	
+	public BookItem[] getBookItems() {
+		return dataManager.getBookItems;
+	}
+	
+	public Book findBook(Writer writer) {
+		return dataManager.findBook(writer);
+	}
+	public DataObject findDataObject(long ean) {
+		return dataManager.findDataObject(ean);
+	}
+	
+	public LocalDate getLendingEndDate(DataObject date) {
+		return lendingManager.getLendingEndDate(date);
+	}
+	
+	public boolean isBookAvailable(Book book) {
+		return lendingManager.isBookAvailable(book);
+	}
+	
+
+
+/*public class Administration {
+	private DataObject[] objects;
+	private Lending[] lendings;
+	private Reservation[] reservations;
+	private Customer[] customers;
+
+	public Administration() {
+		objects = new DataObject[20];
+		lendings = new Lending[20];
+		reservations = new Reservation[20];
+		customers = new Customer[20];
+	};
+
+	public Lending[] getLendings() {
+		return lendings;
+	}
+	
+	public Reservation[] getReservations() {
+		return reservations;
+	}
+
+	public DataObject[] getDataObjects() {
+		return objects;
+	}
+
+	public Customer[] getCustomers() {
+		return customers;
+	}
+
+	public void printDataObjects() {
+		for (Object e : objects) {
+			System.out.println(e.toString());
+		}
+	}
+
+	public void printLendings() {
+		for (Lending l : lendings) {
+			System.out.println(l.toString());
+		}
+	}
+	
 	public static Administration testSetUp() {
 		Administration admin = new Administration();
 		DataObject[] objects = admin.getDataObjects();
@@ -77,5 +164,11 @@ public class TestSetUp {
 		admin.getReservations()[0] = new Reservation(leser, objects[12], LocalDate.of(2018, 10, 1));
 		admin.getReservations()[1] = new Reservation(leser, objects[7], LocalDate.of(2018, 10, 2));
 		return admin;
-	}
+		
+	}*/
+	
+	
+	
+	
 }
+

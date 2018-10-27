@@ -1,4 +1,4 @@
-package Library;
+package library.data;
 
 public final class Music extends DataObject {
 	private final String band;

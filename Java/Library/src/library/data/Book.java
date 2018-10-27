@@ -1,4 +1,4 @@
-package Library;
+package library.data;
 
 
 public final class Book extends PrintMedium {
