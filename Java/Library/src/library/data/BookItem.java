@@ -4,8 +4,8 @@ public class BookItem extends Item {
 	private Book book;
 	
 	public BookItem(long id, Book book) {
-		super(id);
-		this.book = book;
+		super(id, book);
+		this.book = (Book) this.getDataObject();
 	}
 
 	public Book getBook() {

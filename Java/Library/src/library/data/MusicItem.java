@@ -4,8 +4,8 @@ public class MusicItem extends Item {
 	private Music music;
 	
 	public MusicItem(long id, Music music) {
-		super(id);
-		this.music = music;
+		super(id, music);
+		this.music = (Music) this.getDataObject();
 	}
 
 	public Music getMusic() {

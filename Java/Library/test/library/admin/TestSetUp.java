@@ -30,13 +30,13 @@ public class TestSetUp {
 		w[2] = new Writer("Schreiber", "Peter");
 		w[3] = new Writer("Schreiber", "Willi");
 		w[4] = new Writer("Schreiberin", "Anna");
-		bookItems[0] = new BookItem(counter++, new Book(ean++, "On the Road", w[0], 530, 2001));
-		bookItems[1] = new BookItem(counter++, new Book(ean++, "The last Day", w[1], 650, 2002));
-		bookItems[2] = new BookItem(counter++, new Book(ean++, "Behind the Moon", w[2], 300, 2003));
-		bookItems[3] = new BookItem(counter++, new Book(ean++, "The Day after", w[3], 620, 2011));
-		bookItems[4] = new BookItem(counter++, new Book(ean++, "The Hour", w[4], 510, 2000));
-		bookItems[5] = new BookItem(counter++, new Book(ean++, "Kings Field", w[1], 320, 2003));
-		bookItems[6] = new BookItem(counter++, new Book(ean++, "Why", w[2], 170, 2011));
+		bookItems[0] = new BookItem(counter++, new Book(ean++, "On the Road", w[0], 530));
+		bookItems[1] = new BookItem(counter++, new Book(ean++, "The last Day", w[1], 650));
+		bookItems[2] = new BookItem(counter++, new Book(ean++, "Behind the Moon", w[2], 300));
+		bookItems[3] = new BookItem(counter++, new Book(ean++, "The Day after", w[3], 620));
+		bookItems[4] = new BookItem(counter++, new Book(ean++, "The Hour", w[4], 510));
+		bookItems[5] = new BookItem(counter++, new Book(ean++, "Kings Field", w[1], 320));
+		bookItems[6] = new BookItem(counter++, new Book(ean++, "Why", w[2], 170));
 		for (int i = 0; i < 7; i++) {
 			bookItems[i+7] = new BookItem(counter++, bookItems[i].getBook());
 		}

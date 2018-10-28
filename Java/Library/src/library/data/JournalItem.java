@@ -4,8 +4,8 @@ public class JournalItem extends Item {
 	private Journal journal;
 	
 	public JournalItem(long id, Journal journal) {
-		super(id);
-		this.journal = journal;
+		super(id, journal);
+		this.journal = (Journal) this.getDataObject();
 	}
 
 	public Journal getJournal() {

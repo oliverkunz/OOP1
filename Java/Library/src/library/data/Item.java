@@ -6,7 +6,7 @@ public class Item {
 	private DataObject object;
 	private Lending lending;
 	
-	public Item(long id) {
+	public Item(long id, DataObject object) {
 		this.id = id;
 		this.object = object;
 		
@@ -18,7 +18,10 @@ public class Item {
 	}
 	
 	public boolean isAvailable() {
-		return state == State.AVAILABLE;
+		if(state == State.AVAILABLE) {
+			return true;
+		}
+		return false;
 	}
 
 	public long getId() {
@@ -35,10 +38,6 @@ public class Item {
 
 	public void setLending(Lending lending) {
 		this.lending = lending;
-	}
-
-	public enum State {
-		AVAILABLE, LENT, DAMAGED, RESERVED
 	}
 
 	@Override

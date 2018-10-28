@@ -9,10 +9,10 @@ import library.data.Customer;
 import library.data.DataObject;
 import library.data.Film;
 import library.data.Item;
-import library.data.Item.State;
 import library.data.Journal;
 import library.data.Lending;
 import library.data.Music;
+import library.data.State;
 
 public class LendingManager {
 	private List<Lending> lendings;

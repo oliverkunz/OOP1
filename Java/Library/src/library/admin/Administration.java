@@ -16,7 +16,6 @@ import library.data.Writer;
 public class Administration {
 	private LendingManager lendingManager;
 	private DataManager dataManager;
-	private DataObject[] objects;
 	
 	private static Administration instance;
 	
@@ -34,7 +33,7 @@ public class Administration {
 	}
 	
 	public DataObject[] getDataObjects() {
-		return objects;
+		return dataManager.getDataObjects();
 	}
 	
 	public BookItem[] getBookItems() {
