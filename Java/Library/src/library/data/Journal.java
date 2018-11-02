@@ -1,11 +1,10 @@
 package library.data;
 
-public class Journal extends PrintMedium {
-
-	private final String publisher;
+public  class Journal extends PrintMedium {
+	private  String publisher;
 	
-	public Journal(long articleNumber, String title, String publisher, int pages) {
-		super(articleNumber, title, pages);
+	public Journal(long ean, String title, String publisher, int pages) {
+		super(ean, title, pages);
 		this.publisher = publisher;
 	}
 
@@ -15,26 +14,6 @@ public class Journal extends PrintMedium {
 
 	@Override
 	public String toString() {
-		return "Journal [publisher=" + publisher + ", getPages()=" + getPages() + ", getArticlenumber()="
-				+ getArticlenumber() + ", getTitle()=" + getTitle() + "]";
+		return "Journal: " + super.toString() + ", Publisher "+ publisher;
 	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Journal other = (Journal) obj;
-		if (publisher == null) {
-			if (other.publisher != null)
-				return false;
-		} else if (!publisher.equals(other.publisher))
-			return false;
-		return true;
-	}
-	
 }

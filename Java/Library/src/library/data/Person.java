@@ -1,58 +1,44 @@
 package library.data;
 
 public class Person {
-	private String firstname;
-	private String lastname;
-	
-	public Person(String firstname, String lastname) {
-		this.firstname = firstname;
-		this.lastname = lastname;
+
+	protected String lastName;
+	protected String firstName;
+
+	public Person(String lastName, String firstName) {
+		this.lastName = lastName;
+		this.firstName = firstName;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	@Override
-	public String toString() {
-		return "Person [firstname=" + firstname + ", lastname=" + lastname + "]";
+	public String getFirstName() {
+		return firstName;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Person other = (Person) obj;
-		if (firstname == null) {
-			if (other.firstname != null)
+		if (obj instanceof Writer) {
+			Person p = (Person) obj;
+			if (p.firstName != firstName)
 				return false;
-		} else if (!firstname.equals(other.firstname))
-			return false;
-		if (lastname == null) {
-			if (other.lastname != null)
+			if (p.lastName != lastName)
 				return false;
-		} else if (!lastname.equals(other.lastname))
-			return false;
-		return true;
+			else
+				return true;
+		}
+		return false;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		
+
+
+		
+		return "lastName=" + lastName + ", firstName=" + firstName;
+	}
 	
 }

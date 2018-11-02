@@ -1,8 +1,5 @@
 package library.data;
 
 public enum State {
-	AVAILABLE, 
-	LENT,
-	RESERVED,
-	DAMAGED
+	AVAILABLE, LENT, RESERVED, DAMAGED
 }

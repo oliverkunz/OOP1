@@ -1,11 +1,11 @@
 package library.data;
 
-public final class Music extends DataObject {
-	private final String band;
-	private final int length;
-	
-	public Music(long articleNumber, String title, String band, int length) {
-		super(articleNumber, title);
+public  class Music extends DataObject{
+	private  String band;
+	private  int length;
+
+	public Music(long ean, String title, String band, int length) {
+		super(ean, title);
 		this.band = band;
 		this.length = length;
 	}
@@ -20,27 +20,6 @@ public final class Music extends DataObject {
 
 	@Override
 	public String toString() {
-		return "Music [band=" + band + ", length=" + length + ", getArticlenumber()=" + getArticlenumber()
-				+ ", getTitle()=" + getTitle() + "]";
+		return "Music: " + super.toString() + " " + band;
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Music other = (Music) obj;
-		if (band == null) {
-			if (other.band != null)
-				return false;
-		} else if (!band.equals(other.band))
-			return false;
-		if (length != other.length)
-			return false;
-		return true;
-	}
-
 }

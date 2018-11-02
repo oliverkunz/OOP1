@@ -2,10 +2,10 @@ package library.data;
 
 public class MusicItem extends Item {
 	private Music music;
-	
+
 	public MusicItem(long id, Music music) {
 		super(id, music);
-		this.music = (Music) this.getDataObject();
+		this.music = music;
 	}
 
 	public Music getMusic() {
@@ -14,7 +14,6 @@ public class MusicItem extends Item {
 
 	@Override
 	public String toString() {
-		return "MusicItem [music=" + music + "]";
+		return "Music: " + music + super.toString();
 	}
-
 }
