@@ -1,6 +1,8 @@
 package library.admin;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import library.data.*;
 
@@ -20,12 +22,18 @@ public class LendingManager {
 		if (!item.isAvailable()) {
 			return false;
 		}
-		// Todo
+		item.setLending(new Lending(customer, item, date));
+		item.setState(State.LENT);
 		return true;
 	}
 	
+	
 	public boolean returnItem(Item item, LocalDate date){
-	    // Todo
+		if (item.isAvailable()) {
+			return false;
+		}
+	    item.setState(State.AVAILABLE);
+	    item.getLending().setReturnDate(date);
 		return true;
 	}
 	
@@ -35,9 +43,17 @@ public class LendingManager {
 	}
 	
 	public long[] getAvailableItems(long[] ids) {
-		long[] result = null;
-		// Todo
-		return result;
+		List<Long> result = new ArrayList<>();
+
+		Administration admin = Administration.getInstance();
+
+		for (long id : ids) {
+		    if (admin.findItem(id).isAvailable()) {
+			result.add(id);
+		    }
+		}
+
+		return Utils.listToArray(result);    
 	}
 	
 	

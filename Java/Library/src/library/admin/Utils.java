@@ -45,5 +45,43 @@ public class Utils {
 				
 		return longArr;
 	}
+	
+    public static Item[] concat(Item[]... arrays) {
+	int length = 0;
+	for (Item[] array : arrays) {
+	    length += array.length;
+	}
+	Item[] result = new Item[length];
+	int pos = 0;
+	for (Item[] array : arrays) {
+	    for (Item element : array) {
+		result[pos] = element;
+		pos++;
+	    }
+	}
+	return result;
+    }
+
+    public static long[] concat(long[]... arrays) {
+	int length = 0;
+	for (long[] array : arrays) {
+	    if (array != null) {
+		length += array.length;
+	    }
+	}
+	long[] result = new long[length];
+	int pos = 0;
+	for (long[] array : arrays) {
+	    if (array == null) {
+		continue;
+	    }
+
+	    for (long element : array) {
+		result[pos] = element;
+		pos++;
+	    }
+	}
+	return result;
+    }
 
 }

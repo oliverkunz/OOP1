@@ -45,10 +45,10 @@ public class DataManager {
 	
 	public long[] findItems(String s) {
 		long[] result = null;
-		result = Utils.addNumbers(result, findBookItems(s));
-		result = Utils.addNumbers(result, findMusicItems(s));
-		result = Utils.addNumbers(result, findFilmItems(s));
-		result = Utils.addNumbers(result, findJournalItems(s));
+		result = Utils.concat(result, findBookItems(s));
+		result = Utils.concat(result, findMusicItems(s));
+		result = Utils.concat(result, findFilmItems(s));
+		result = Utils.concat(result, findJournalItems(s));
 		return result;
 	}
 
@@ -99,7 +99,7 @@ public class DataManager {
 	public long[] findItems(Actor actor) {
 		List<Long> ids = new ArrayList<>();
 		for (FilmItem film : filmItems) {
-			if (film.getFilm().getActors().equals(actor)) {
+			if (this.contains(film.getFilm().getActors(), actor)) {
 				ids.add(film.getId());
 			}
 		}
