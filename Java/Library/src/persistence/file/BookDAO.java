@@ -1,4 +1,4 @@
-package persistence;
+package persistence.file;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,8 +8,9 @@ import java.util.logging.Logger;
 
 import library.data.Book;
 import library.data.Writer;
+import persistence.IBookDAO;
 
-public class BookDAO {
+public class BookDAO implements IBookDAO {
 
 	private File bookFile;
 	private String delimiter;
@@ -43,6 +44,10 @@ public class BookDAO {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see persistence.file.IBookDAOtest#getBooks()
+	 */
+	@Override
 	public Book[] getBooks() {
 		if (books == null)
 			loadBooks();

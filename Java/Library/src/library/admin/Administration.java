@@ -29,6 +29,14 @@ public class Administration {
 		dataManager = new DataManager();
 		lendingManager = new LendingManager();
 	}
+	
+    public DataManager getDataManager() {
+    	return dataManager;
+    }
+
+    public LendingManager getLendingManager() {
+    	return lendingManager;
+    }
 
 	public Item findItem(long id) {
 		return dataManager.findItem(id);
@@ -77,6 +85,10 @@ public class Administration {
 	public void returnItem(Item item, LocalDate date) {
 		lendingManager.returnItem(item, date);
 	}
+	
+	public void setCustomers(Customer[] customers) {
+		this.dataManager.setCustomers(customers);
+	}
 
 	public BookItem[] getBookItems() {
 		return dataManager.getBookItems();
@@ -92,6 +104,10 @@ public class Administration {
 
 	public JournalItem[] getJournalItems() {
 		return dataManager.getJournalItems();
+	}
+
+	public Customer[] getCustomers() {
+		return this.dataManager.getCustomers();
 	}
 
 }

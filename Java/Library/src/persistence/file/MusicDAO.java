@@ -1,4 +1,4 @@
-package persistence;
+package persistence.file;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,8 +7,9 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 import library.data.Music;
+import persistence.IMusicDAO;
 
-public class MusicDAO {
+public class MusicDAO implements IMusicDAO {
 	
 	private File musicFile;
 	private String delimiter;

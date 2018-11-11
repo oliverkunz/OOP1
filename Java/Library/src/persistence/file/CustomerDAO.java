@@ -1,4 +1,4 @@
-package persistence;
+package persistence.file;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,8 +7,9 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 import library.data.Customer;
+import persistence.ICustomerDAO;
 
-public class CustomerDAO {
+public class CustomerDAO implements ICustomerDAO{
 	
 	private File customerFile;
 	private String delimiter;

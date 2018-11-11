@@ -1,4 +1,4 @@
-package persistence;
+package persistence.file;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,8 +8,9 @@ import java.util.logging.Logger;
 
 import library.data.Actor;
 import library.data.Film;
+import persistence.IFilmDAO;
 
-public class FilmDAO {
+public class FilmDAO implements IFilmDAO {
 
 	private File filmFile;
 	private String delimiter;

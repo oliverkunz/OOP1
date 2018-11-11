@@ -1,4 +1,4 @@
-package persistence;
+package persistence.file;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,8 +7,9 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 import library.data.Journal;
+import persistence.IJournalDAO;
 
-public class JournalDAO {
+public class JournalDAO implements IJournalDAO {
 	private File journalFile;
 	private String delimiter;
 	private Journal[] journals;

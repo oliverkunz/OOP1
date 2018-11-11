@@ -27,6 +27,17 @@ public class LendingManager {
 		return true;
 	}
 	
+	public boolean addLending(Lending lending) {
+		Item item = lending.getItem();
+		if (!item.isAvailable() ) {
+			return false;
+		}
+		lendings[this.lendingCounter++] = lending;
+		item.setLending(lending);
+		item.setState(State.LENT);
+		return true;
+	}
+	
 	
 	public boolean returnItem(Item item, LocalDate date){
 		if (item.isAvailable()) {

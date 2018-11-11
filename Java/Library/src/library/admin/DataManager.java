@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import library.data.Actor;
-import library.data.Book;
 import library.data.BookItem;
 import library.data.DataObject;
 import library.data.Customer;
-import library.data.Film;
 import library.data.FilmItem;
 import library.data.Item;
-import library.data.Journal;
 import library.data.JournalItem;
-import library.data.Music;
 import library.data.MusicItem;
 import library.data.Writer;
 
@@ -168,6 +164,10 @@ public class DataManager {
 			System.out.println(e.toString());
 		}
 	}
+	
+	public void setCustomers(Customer[] customers) {
+		this.customers = customers;
+	    }
 
 	public Customer[] getCustomers() {
 		return customers;

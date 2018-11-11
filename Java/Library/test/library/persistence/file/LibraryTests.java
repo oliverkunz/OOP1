@@ -1,7 +1,7 @@
+package library.persistence.file;
 
-package library.admin;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
 
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import library.admin.Administration;
 import library.data.Actor;
 import library.data.BookItem;
 import library.data.Film;
@@ -44,88 +45,90 @@ class LibraryTests {
 	@Test
 	void test02() {
 		long[] found = admin.findItems(new Writer("Schreiberin", "Anna"));
-		Assertions.assertEquals(found[0], bookItems[4].getId());
+		assertEquals(found[0], bookItems[4].getId());
 	}
 
 	@Test
 	void test03() {
 		long[] m = admin.findItems(Music.class, "Abba");
-		Assertions.assertEquals(m[0], musicItems[0].getId());
+		assertEquals(m[0], musicItems[0].getId());
 	}
 
 	@Test
 	void test04() {
-		long[] m = admin.findItems(Music.class,"Enja");
-		Assertions.assertEquals(m[0], musicItems[2].getId());
+		long[] m = admin.findItems(Music.class, "Enja");
+		assertEquals(m[0], musicItems[2].getId());
 	}
 
 	@Test
 	void test05() {
-		long[] m = admin.findItems(Music.class,"Pink Floyd");
-		Assertions.assertEquals(m[1], musicItems[16].getId());
+		long[] m = admin.findItems(Music.class, "Pink Floyd");
+		assertEquals(m[1], musicItems[16].getId());
 	}
 
 	@Test
 	void test06() {
-		long[] o = admin.findItems(Journal.class,"Springer");
-		Assertions.assertEquals(o[1], journalItems[2].getId());
+		long[] o = admin.findItems(Journal.class, "Springer");
+		assertEquals(o[1], journalItems[2].getId());
 	}
-	
+
 	@Test
 	void test07() {
-		long[] o = admin.findItems(Film.class,"Lucas Film");
-		Assertions.assertEquals(o[1], filmItems[1].getId());
+		long[] o = admin.findItems(Film.class, "Lucas Film");
+		assertEquals(o[1], filmItems[1].getId());
 	}
-	
+
 	@Test
 	void test08() {
-		long[] o = admin.findItems(Film.class,"Lucas Film");
-		Assertions.assertEquals(3, admin.getAvailableItems(o).length);
+		long[] o = admin.findItems(Film.class, "Lucas Film");
+		assertEquals(3, admin.getAvailableItems(o).length);
 	}
-	
+
 	@Test
 	void test09() {
-		long[] o = admin.findItems(Journal.class,"Springer");
-		Assertions.assertEquals(8, admin.getAvailableItems(o).length);
+		long[] o = admin.findItems(Journal.class, "Springer");
+		assertEquals(8, admin.getAvailableItems(o).length);
 	}
+
 	@Test
 	void test10() {
-		long[] o = admin.findItems(Film.class,"Star Wars I");
-		Assertions.assertArrayEquals(o, admin.getAvailableItems(o));
+		long[] o = admin.findItems(Film.class, "Star Wars I");
+		assertArrayEquals(o, admin.getAvailableItems(o));
 	}
+
 	@Test
 	void test11() {
 		long[] o = admin.findItems(new Actor("Bale", "Christian"));
-		Assertions.assertEquals(9, admin.getAvailableItems(o).length);
+		assertEquals(9, admin.getAvailableItems(o).length);
 	}
-	
+
 	@Test
 	void test12() {
 		long[] o = admin.findItems(new Writer("Schreiber", "Hans"));
-		Assertions.assertEquals(5, admin.getAvailableItems(o).length);
+		assertEquals(5, admin.getAvailableItems(o).length);
 	}
 
 	@Test
 	void test13() {
-		long[] o = admin.findItems(Journal.class,"Nature");
-		Assertions.assertArrayEquals(o, admin.getAvailableItems(o));
+		long[] o = admin.findItems(Journal.class, "Nature");
+		assertArrayEquals(o, admin.getAvailableItems(o));
 	}
-	
+
 	@Test
 	void test14() {
-		long[] o = admin.findItems(Journal.class,"JSTOR");
-		Assertions.assertArrayEquals(o, admin.getAvailableItems(o));
+		long[] o = admin.findItems(Journal.class, "JSTOR");
+		assertArrayEquals(o, admin.getAvailableItems(o));
 	}
-	
+
 	@Test
 	void test15() {
-		assertEquals(admin.getTimeLimit(musicItems[4]), LocalDate.of(2018,11,15));
+		assertEquals(admin.getTimeLimit(musicItems[4]), LocalDate.of(2018, 11, 15));
 	}
-	
+
 	void test16() {
-		assertEquals(admin.getTimeLimit(bookItems[8]), LocalDate.of(2018,11,12));
+		assertEquals(admin.getTimeLimit(bookItems[8]), LocalDate.of(2018, 11, 12));
 	}
-	
+
 	@Test
 	void test17() {
 		assertEquals(admin.getLendingEndDate(musicItems[0]), LocalDate.now());
@@ -173,4 +176,5 @@ class LibraryTests {
 		assertEquals(found[0], filmItems[4].getId());
 		assertEquals(found[1], filmItems[5].getId());
 	}
+	
 }

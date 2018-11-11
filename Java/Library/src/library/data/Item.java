@@ -1,6 +1,6 @@
 package library.data;
 
-public abstract class Item {
+public abstract class Item implements Comparable<Item> {
 	private long id;
 	private State state;
 	private Lending lending;
@@ -57,5 +57,10 @@ public abstract class Item {
 	public String toString() {
 		return "Item: " + id + state.name();
 	}
+	
+	@Override
+    public int compareTo(final Item item) {
+		return Long.compare(this.id, item.id);
+    }
 
 }
