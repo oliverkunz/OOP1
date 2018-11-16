@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.logging.Logger;
 
 import library.admin.Administration;
+import library.admin.ItemNotAvailableException;
 import library.admin.LendingManager;
+import library.admin.NoItemsFoundException;
 import library.data.Customer;
 import library.data.Lending;
 import persistence.ILendingDAO;
@@ -27,9 +29,18 @@ public class LendingDAO implements ILendingDAO {
 		log("load lendings");
 
 		for (int i = 0; i < 10; i++) {
-			lendings[i] = new Lending(customers[i], admin.findItem(i+1), LocalDate.now().minusDays(5 * i + 5));
-			lendingManager.addLending(lendings[i]);
-			lendingManager.returnItem(admin.findItem(i+1), LocalDate.now().minusDays(5 + i));
+			try {
+				lendings[i] = new Lending(customers[i], admin.findItem(i+1), LocalDate.now().minusDays(5 * i + 5));
+			
+				lendingManager.addLending(lendings[i]);
+			} catch (ItemNotAvailableException | NoItemsFoundException e) {
+				System.out.println(e.getMessage());
+			}
+			try {
+				lendingManager.returnItem(admin.findItem(i+1), LocalDate.now().minusDays(5 + i));
+			} catch (NoItemsFoundException e) {
+				System.out.println(e.getMessage());
+			}	
 		}
 	}
 

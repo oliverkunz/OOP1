@@ -1,7 +1,7 @@
+
 package library.persistence.file;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 
@@ -10,10 +10,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import library.admin.Administration;
+import library.admin.ItemNotAvailableException;
+import library.admin.NoAvailableItemsException;
+import library.admin.NoItemsFoundException;
 import library.data.Actor;
+import library.data.Book;
 import library.data.BookItem;
+import library.data.Customer;
 import library.data.Film;
 import library.data.FilmItem;
+import library.data.Item;
 import library.data.Journal;
 import library.data.JournalItem;
 import library.data.Music;
@@ -26,155 +32,179 @@ class LibraryTests {
 	private static MusicItem[] musicItems;
 	private static FilmItem[] filmItems;
 	private static JournalItem[] journalItems;
+	private static Customer customer;
 
 	@BeforeAll
 	private static void setUp() {
-		admin = TestSetUp.testSetUp();
-		bookItems = admin.getBookItems();
-		musicItems = admin.getMusicItems();
-		filmItems = admin.getFilmItems();
-		journalItems = admin.getJournalItems();
+		try {
+			admin = TestSetUp.testSetUp();
+			bookItems = admin.getBookItems();
+			musicItems = admin.getMusicItems();
+			filmItems = admin.getFilmItems();
+			journalItems = admin.getJournalItems();
+			customer = admin.getCustomers()[0];
+
+		} catch (NoItemsFoundException | ItemNotAvailableException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	void test01() {
-		long[] found = admin.findItems(new Writer("Schreiber", "Peter"));
-		Assertions.assertEquals(found[0], bookItems[2].getId());
+		Assertions.assertThrows(NoItemsFoundException.class, () -> {
+			admin.findItems(new Writer("Schreiber", "Hansli"));
+		});
 	}
 
 	@Test
 	void test02() {
-		long[] found = admin.findItems(new Writer("Schreiberin", "Anna"));
-		assertEquals(found[0], bookItems[4].getId());
+		long[] found;
+		try {
+			found = admin.findItems(new Writer("Schreiberin", "Anna"));
+			assertEquals(found[0], bookItems[4].getId());
+		} catch (NoItemsFoundException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@Test
 	void test03() {
-		long[] m = admin.findItems(Music.class, "Abba");
-		assertEquals(m[0], musicItems[0].getId());
+		Assertions.assertThrows(NoItemsFoundException.class, () -> {
+			admin.findItems(Music.class, "Aba");
+		});
 	}
 
 	@Test
 	void test04() {
-		long[] m = admin.findItems(Music.class, "Enja");
-		assertEquals(m[0], musicItems[2].getId());
+		try {
+			long[] m = admin.findItems(Music.class, "Enja");
+			assertEquals(m[0], musicItems[2].getId());
+		} catch (NoItemsFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	void test05() {
-		long[] m = admin.findItems(Music.class, "Pink Floyd");
-		assertEquals(m[1], musicItems[16].getId());
+		Assertions.assertThrows(NoItemsFoundException.class, () -> {
+			admin.findItems(Journal.class, "Spinger");
+		});
 	}
 
 	@Test
 	void test06() {
-		long[] o = admin.findItems(Journal.class, "Springer");
-		assertEquals(o[1], journalItems[2].getId());
+		try {
+			long[] o = admin.findItems(Journal.class, "Springer");
+			assertEquals(o[1], journalItems[2].getId());
+		} catch (NoItemsFoundException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@Test
 	void test07() {
-		long[] o = admin.findItems(Film.class, "Lucas Film");
-		assertEquals(o[1], filmItems[1].getId());
+		Assertions.assertThrows(NoItemsFoundException.class, () -> {
+			admin.findItems(Film.class, "Lucas");
+		});
 	}
 
 	@Test
 	void test08() {
-		long[] o = admin.findItems(Film.class, "Lucas Film");
-		assertEquals(3, admin.getAvailableItems(o).length);
+		try {
+			long[] o = admin.findItems(Film.class, "Lucas Film");
+			assertEquals(3, admin.getAvailableItems(o).length);
+		} catch (NoItemsFoundException | NoAvailableItemsException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
-	void test09() {
+	void test09() throws Exception {
 		long[] o = admin.findItems(Journal.class, "Springer");
 		assertEquals(8, admin.getAvailableItems(o).length);
 	}
 
 	@Test
-	void test10() {
-		long[] o = admin.findItems(Film.class, "Star Wars I");
-		assertArrayEquals(o, admin.getAvailableItems(o));
+	void test10() throws Exception {
+		admin.addLending(customer, admin.getFilmItems()[0], LocalDate.now());
+		admin.addLending(customer, admin.getFilmItems()[15], LocalDate.now());
+		Assertions.assertThrows(NoAvailableItemsException.class, () -> {
+			admin.getAvailableItems(admin.findItems("Star Wars I"));
+		});
 	}
 
 	@Test
-	void test11() {
-		long[] o = admin.findItems(new Actor("Bale", "Christian"));
-		assertEquals(9, admin.getAvailableItems(o).length);
+	void test12() throws Exception {
+		long[] found = admin.findItems(Book.class, "Tombland");
+		for (long a : found)
+			admin.addLending(customer, admin.findItem(a), LocalDate.now());
+		Assertions.assertThrows(NoAvailableItemsException.class, () -> {
+			admin.getAvailableItems((found));
+		});
 	}
 
 	@Test
-	void test12() {
-		long[] o = admin.findItems(new Writer("Schreiber", "Hans"));
-		assertEquals(5, admin.getAvailableItems(o).length);
+	void test13() throws Exception {
+		long[] found = admin.findItems(new Writer("Schreiberin", "Barbara"));
+		Assertions.assertThrows(ItemNotAvailableException.class, () -> {
+			for (long a : found)
+				admin.addLending(customer, admin.findItem(a), LocalDate.now());
+		});
 	}
 
 	@Test
-	void test13() {
-		long[] o = admin.findItems(Journal.class, "Nature");
-		assertArrayEquals(o, admin.getAvailableItems(o));
+	void test14() throws Exception {
+		long[] found = admin.findItems("Abba");
+		for (long a : found)
+			admin.addLending(customer, admin.findItem(a), LocalDate.now());
+		Assertions.assertThrows(NoAvailableItemsException.class, () -> {
+			admin.getAvailableItems((found));
+		});
 	}
 
 	@Test
-	void test14() {
-		long[] o = admin.findItems(Journal.class, "JSTOR");
-		assertArrayEquals(o, admin.getAvailableItems(o));
+	void test15() throws Exception {
+		long[] found = admin.findItems("LNCS");
+		for (long a : found)
+			admin.addLending(customer, admin.findItem(a), LocalDate.now());
+		Assertions.assertThrows(NoAvailableItemsException.class, () -> {
+			admin.getAvailableItems((found));
+		});
 	}
 
 	@Test
-	void test15() {
-		assertEquals(admin.getTimeLimit(musicItems[4]), LocalDate.of(2018, 11, 15));
-	}
-
-	void test16() {
-		assertEquals(admin.getTimeLimit(bookItems[8]), LocalDate.of(2018, 11, 12));
+	void test16() throws Exception {
+		long[] found = admin.findItems(new Actor("Portman", "Natalie"));
+		for (long a : found)
+			admin.addLending(customer, admin.findItem(a), LocalDate.now());
+		Assertions.assertThrows(NoAvailableItemsException.class, () -> {
+			admin.getAvailableItems((found));
+		});
 	}
 
 	@Test
 	void test17() {
-		assertEquals(admin.getLendingEndDate(musicItems[0]), LocalDate.now());
+		try {
+			long[] m = admin.findItems(Film.class, "Paramount");
+			assertEquals(m[0], filmItems[2].getId());
+		} catch (NoItemsFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
-	void test18() {
-		assertEquals(admin.getLendingEndDate(bookItems[0]), LocalDate.now());
-	}
-
-	@Test
-	void test19() {
-		assertEquals(admin.getLendingEndDate(filmItems[4]), LocalDate.now());
-	}
-
-	@Test
-	void test20() {
-		assertEquals(admin.getLendingEndDate(musicItems[10]), LocalDate.now());
-	}
-
-	@Test
-	void test21() {
+	void test18() throws Exception {
 		long[] found = admin.findItems(new Writer("Schreiberin", "Barbara"));
-		assertEquals(found[0], bookItems[0].getId());
-		assertEquals(found[1], bookItems[5].getId());
+		for (long a : found) {
+			Item item = admin.findItem(a);
+			if (item.isAvailable())
+				admin.addLending(customer, item, LocalDate.now());
+		}
+		Assertions.assertThrows(NoAvailableItemsException.class, () -> {
+			admin.getAvailableItems((found));
+		});
 	}
 
-	@Test
-	void test22() {
-		long[] found = admin.findItems("Abba");
-		assertEquals(found[0], musicItems[0].getId());
-		assertEquals(found[1], musicItems[15].getId());
-	}
-
-	@Test
-	void test23() {
-		long[] found = admin.findItems("LNCS");
-		assertEquals(found[0], journalItems[2].getId());
-		assertEquals(found[1], journalItems[17].getId());
-	}
-
-	@Test
-	void test25() {
-		long[] found = admin.findItems(new Actor("Portman", "Natalie"));
-		assertEquals(found[0], filmItems[4].getId());
-		assertEquals(found[1], filmItems[5].getId());
-	}
-	
 }

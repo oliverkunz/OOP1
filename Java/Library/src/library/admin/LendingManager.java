@@ -18,19 +18,20 @@ public class LendingManager {
 		return lendings;
 	}
 	
-	public boolean addLending(Customer customer, Item item, LocalDate date) {
+	public boolean addLending(Customer customer, Item item, LocalDate date) throws ItemNotAvailableException {
+		assert item != null : "Item ist null";
 		if (!item.isAvailable()) {
-			return false;
+			throw new ItemNotAvailableException("Item ist nicht verfuegbar");
 		}
 		item.setLending(new Lending(customer, item, date));
 		item.setState(State.LENT);
 		return true;
 	}
 	
-	public boolean addLending(Lending lending) {
+	public boolean addLending(Lending lending) throws ItemNotAvailableException {
 		Item item = lending.getItem();
 		if (!item.isAvailable() ) {
-			return false;
+			throw new ItemNotAvailableException("Item ist nicht verfuegbar");
 		}
 		lendings[this.lendingCounter++] = lending;
 		item.setLending(lending);
@@ -40,6 +41,7 @@ public class LendingManager {
 	
 	
 	public boolean returnItem(Item item, LocalDate date){
+		assert item != null : "Item ist null";
 		if (item.isAvailable()) {
 			return false;
 		}
@@ -50,20 +52,27 @@ public class LendingManager {
 	
 
 	public boolean isAvailable(Item item) {
+		assert item != null : "Item ist null";
 		return item.isAvailable();
 	}
 	
-	public long[] getAvailableItems(long[] ids) {
+	public long[] getAvailableItems(long[] ids) throws NoAvailableItemsException {
 		List<Long> result = new ArrayList<>();
 
 		Administration admin = Administration.getInstance();
 
 		for (long id : ids) {
-		    if (admin.findItem(id).isAvailable()) {
-			result.add(id);
+		    try {
+				if (admin.findItem(id).isAvailable()) {
+				result.add(id);
+				}
+			} catch (NoItemsFoundException e) {
+				System.out.println(e.getMessage());
+			}
+		    if (result == null || result.size() == 0) {
+				throw new NoAvailableItemsException("Keine verfuegbaren Items");
 		    }
 		}
-
 		return Utils.listToArray(result);    
 	}
 	

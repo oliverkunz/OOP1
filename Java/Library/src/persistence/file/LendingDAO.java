@@ -8,6 +8,8 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 import library.admin.Administration;
+import library.admin.ItemNotAvailableException;
+import library.admin.NoItemsFoundException;
 import library.data.Customer;
 import library.data.Item;
 import library.data.Lending;
@@ -49,9 +51,9 @@ public class LendingDAO implements ILendingDAO {
 				}
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("Film Datei nicht gefunden");
-		} catch (NumberFormatException e) {
-			System.out.println("Film Datei ist korrput");
+			System.out.println("Lending Datei nicht gefunden");
+		} catch (NumberFormatException | ItemNotAvailableException | NoItemsFoundException e) {
+			System.out.println("Lending Datei ist korrupt");
 		}
 	}
 
