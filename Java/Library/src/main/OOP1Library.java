@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.Bloom;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -48,6 +49,7 @@ public class OOP1Library extends Application {
 		box.setMaxWidth(600);
 		box.getChildren().add(panes[0]);
 		button = new Button("Next");
+		//button.setStyle("-fx-base: #d3d3d3;");
 		button.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {

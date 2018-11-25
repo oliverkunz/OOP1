@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -52,9 +53,7 @@ public class LoginScreen extends Pane {
 	    grid.add(l2,0,2); grid.add(t2,1,2);
 	    grid.add(l3,0,3); grid.add(t3,1,3);
 	    grid.add(l4,0,4); grid.add(passwordField,1,4);
-	    grid.add(l5,1,5);
-	   
-	    
+	    grid.add(l5,1,5);	    
 	    
 	    passwordField.setOnAction(new EventHandler<ActionEvent>() {
 	        @Override public void handle(ActionEvent e) {
