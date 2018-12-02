@@ -25,6 +25,7 @@ import library.data.JournalItem;
 import library.data.Music;
 import library.data.MusicItem;
 import library.data.Writer;
+import persistence.file.TestSetUp;
 
 class LibraryTests {
 	private static Administration admin;

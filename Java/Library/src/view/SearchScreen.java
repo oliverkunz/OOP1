@@ -1,5 +1,9 @@
 package view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -11,7 +15,10 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-public class SearchScreen extends Pane {
+public class SearchScreen extends Pane implements ChangeListener<String> {
+	
+	private Controller controller;
+	ObservableList<String> category;
 
 	public SearchScreen() {
 		this.setId("searchScreen");
@@ -25,6 +32,8 @@ public class SearchScreen extends Pane {
 	    GridPane grid = new GridPane();
 	    grid.setPadding(new Insets(250, 25, 25, 100)); //(top/right/bottom/left)
 	     
+	    category = FXCollections.observableArrayList("Buch", "Film", "Musik", "Zeitschrift");
+	    
 	    ColumnConstraints col1 = new ColumnConstraints();
 		col1.setPercentWidth(3);
 		ColumnConstraints col2 = new ColumnConstraints();
@@ -37,8 +46,8 @@ public class SearchScreen extends Pane {
 	    Label l1 = new Label("Kategorie");
 	    Label l2 = new Label("Suchtext");
 	    Label l3 = new Label("Schauspieler/in");
-	    ChoiceBox<String> c1 = new ChoiceBox<String>();
-	    c1.getItems().add("Buch"); c1.getItems().add("Film"); c1.getItems().add("Musik"); c1.getItems().add("Zeitschrift");
+	    ChoiceBox<String> c1 = new ChoiceBox<String>(category);
+	    c1.itemsProperty().bindBidirectional(controller.getCategories());
 	    TextField t2 = new TextField();
 	    TextField t3 = new TextField();
 	    TextField t4 = new TextField();
@@ -52,6 +61,12 @@ public class SearchScreen extends Pane {
 	    
 		getChildren().addAll(grid,img);
 
+	}
+
+	@Override
+	public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

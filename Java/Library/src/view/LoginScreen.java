@@ -7,15 +7,16 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+import library.admin.InvalidLoginException;
 
-public class LoginScreen extends Pane {
+public class LoginScreen extends Pane implements EventHandler<ActionEvent> {
+	
+	private Controller controller;
 
 	public LoginScreen() {
 		this.setId("loginScreen");
@@ -44,18 +45,24 @@ public class LoginScreen extends Pane {
 	    Label l3 = new Label("Email");
 	    Label l4 = new Label("Passwort");
 	    Label l5 = new Label("");
+	    l5.textProperty().bindBidirectional(controller.getMessage());
 	    TextField t1 = new TextField();
+	    t1.textProperty().bindBidirectional(controller.getFirstName());
 	    TextField t2 = new TextField();
+	    t2.textProperty().bindBidirectional(controller.getLastName());
 	    TextField t3 = new TextField();
+	    t3.textProperty().bindBidirectional(controller.getEmail());
 	    PasswordField passwordField = new PasswordField();
-	
+	    passwordField.textProperty().bindBidirectional(controller.getPassword());
+	    passwordField.addEventHandler(ActionEvent.ACTION, this);
+	    
 	    grid.add(l1,0,1); grid.add(t1,1,1);
 	    grid.add(l2,0,2); grid.add(t2,1,2);
 	    grid.add(l3,0,3); grid.add(t3,1,3);
 	    grid.add(l4,0,4); grid.add(passwordField,1,4);
 	    grid.add(l5,1,5);	    
 	    
-	    passwordField.setOnAction(new EventHandler<ActionEvent>() {
+	    /*passwordField.setOnAction(new EventHandler<ActionEvent>() {
 	        @Override public void handle(ActionEvent e) {
 	            if (!passwordField.getText().equals(t3.getText())) {
 	                l5.setText("Wrong Password");
@@ -66,9 +73,23 @@ public class LoginScreen extends Pane {
 	            }
 	            passwordField.clear();
 	        }
-	    });
+	        
+	    });*/
+	    
+	 
 
 	    getChildren().addAll(grid,img);
 	     
+	}
+
+	@Override
+	public void handle(ActionEvent event) {
+		try {
+			controller.checkPassword();
+		} catch (InvalidLoginException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 	}
 }

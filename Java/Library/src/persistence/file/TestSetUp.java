@@ -1,4 +1,4 @@
-package library.persistence.file;
+package persistence.file;
 
 import library.admin.Administration;
 import library.admin.ItemNotAvailableException;
@@ -13,7 +13,6 @@ import library.data.JournalItem;
 import library.data.Music;
 import library.data.MusicItem;
 import persistence.AbstractFactory;
-import persistence.file.FileDAOFactory;
 
 public class TestSetUp {
 

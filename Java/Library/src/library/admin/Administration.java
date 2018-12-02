@@ -10,11 +10,13 @@ import library.data.Item;
 import library.data.JournalItem;
 import library.data.MusicItem;
 import library.data.Writer;
+import view.Controller;
 
 public class Administration {
 
 	private DataManager dataManager;
 	private LendingManager lendingManager;
+	private Controller controller;
 
 	private static Administration instance;
 
@@ -108,6 +110,10 @@ public class Administration {
 
 	public Customer[] getCustomers() {
 		return this.dataManager.getCustomers();
+	}
+
+	public Controller getController() {
+		return controller;
 	}
 
 }
