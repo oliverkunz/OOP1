@@ -62,17 +62,17 @@ public class Controller {
 
 
 	public void checkPassword() throws InvalidLoginException {
-		if (!password.getValue().equals(email.getValue())) {
-			message.setValue("Wrong Password");
-			//message.setTextFill(Color.rgb(255, 0, 0));
-            throw new InvalidLoginException("Wrong Password");
-            
-        } else {
-            message.setValue("Password correct");
-            //message.setTextFill(Color.rgb(0, 255, 0));
-        }
-        password.setValue("");
-		
+		Administration admin = Administration.getInstance();
+		Customer[] customers = admin.getCustomers();
+
+		for (Customer customer : customers) {
+		    if (customer.getEmail().equals(email.getValue()) && customer.getEmail().equals(password.getValue())) {
+		    	message.setValue("Passowrd correct");
+		    	return;
+		    }
+		}
+		message.setValue("Wrong Password");
+		throw new InvalidLoginException("Wrong Password");
 	}
 	
 	public void lendItem() {
@@ -92,7 +92,12 @@ public class Controller {
 			main.setButtonState(1, "Login", true, false);
 		}
 		if (nr == 2)
-			main.setButtonState(1, "Suche", true, false);
+			try {
+				this.checkPassword();
+				main.setButtonState(1, "Suche", true, false);
+			} catch (InvalidLoginException e) {
+				nr--;
+			}
 		if (nr == 3)
 			try {
 				this.searchAction();

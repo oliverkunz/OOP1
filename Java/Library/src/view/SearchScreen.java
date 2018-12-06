@@ -17,12 +17,9 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-public class SearchScreen extends Pane implements ChangeListener<Toggle> {
+public class SearchScreen extends Pane  {
 	
 	private Controller controller;
-	private ToggleGroup group;
-	
-	ObservableList<String> category;
 
 	public SearchScreen() {
 		this.setId("searchScreen");
@@ -35,8 +32,6 @@ public class SearchScreen extends Pane implements ChangeListener<Toggle> {
 		
 	    GridPane grid = new GridPane();
 	    grid.setPadding(new Insets(250, 25, 25, 100)); //(top/right/bottom/left)
-	     
-	    category = FXCollections.observableArrayList("Buch", "Film", "Musik", "Zeitschrift");
 	    
 	    ColumnConstraints col1 = new ColumnConstraints();
 		col1.setPercentWidth(3);
@@ -47,13 +42,18 @@ public class SearchScreen extends Pane implements ChangeListener<Toggle> {
 		grid.getColumnConstraints().addAll(col1, col2, col3);
 		grid.setGridLinesVisible(false);
 		
-		group = new ToggleGroup();
+		final ToggleGroup stateG = new ToggleGroup();
+		stateG.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+		    public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle, Toggle new_toggle) {
+			if (new_toggle != null)
+			    System.out.println(stateG.getSelectedToggle().getUserData());
+		    }
+		});
 		
 	    Label l1 = new Label("Kategorie");
 	    Label l2 = new Label("Suchtext");
 	    Label l3 = new Label("Schauspieler/in");
-	    ChoiceBox<String> c1 = new ChoiceBox<String>(category);
-	  //  c1.itemsProperty().bindBidirectional(controller.getCategories());
+	    ChoiceBox<String> c1 = new ChoiceBox<String>();
 	    TextField t2 = new TextField();
 	    t2.textProperty().bindBidirectional(controller.getTitle());
 	    TextField t3 = new TextField();
@@ -62,10 +62,33 @@ public class SearchScreen extends Pane implements ChangeListener<Toggle> {
 	    TextField t4 = new TextField();
 	    t4.textProperty().bindBidirectional(controller.getWriterLastName());
 	    t4.textProperty().bindBidirectional(controller.getActorLastName());
-	    RadioButton r1 = new RadioButton("Nur Verfügbare"); r1.setToggleGroup(group);
-	    RadioButton r2 = new RadioButton("Alle"); r2.setToggleGroup(group);
 	    
-	    group.selectedToggleProperty().addListener(this);
+	    RadioButton r1 = new RadioButton("Nur Verfügbare"); r1.setToggleGroup(stateG);
+	    r1.setSelected(true);
+		r1.setUserData("available");
+	    RadioButton r2 = new RadioButton("Alle"); r2.setToggleGroup(stateG);
+	    r2.setUserData("all");
+	    
+	    c1.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+		    @Override
+		    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+			System.out.println(c1.getItems().get((Integer) number2));
+			switch (c1.getItems().get((Integer) number2)) {
+			case "Bücher":
+			    grid.getChildren().setAll(new TextField());
+			    break;
+			case "Zeitschriften":
+			    grid.getChildren().setAll(new TextField());
+			    break;
+			case "Musik":
+			    grid.getChildren().setAll(new TextField());
+			    break;
+			case "Filme":
+			    grid.getChildren().setAll(t3, t4);
+			    break;
+			}
+		    }
+		});
 	    
 	    grid.add(l1,0,1); grid.add(c1,1,1);
 	    grid.add(l2,0,2); grid.add(t2,1,2);
@@ -75,14 +98,5 @@ public class SearchScreen extends Pane implements ChangeListener<Toggle> {
 		getChildren().addAll(grid,img);
 
 	}
-
-	@Override
-	public void changed(ObservableValue<? extends Toggle> ov, Toggle o, Toggle newValue) {		
-		if (group.getSelectedToggle() != null) {
-           // to do  RadioButton button = (r1, r2) group.getSelectedToggle();	
-        }
-	}
-
-	
 
 }

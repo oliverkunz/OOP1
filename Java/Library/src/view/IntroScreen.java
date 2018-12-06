@@ -15,10 +15,6 @@ public class IntroScreen extends VBox {
 		label2.setId("intro2");
 		ImageView img = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("res/img.jpg")));
 		setAlignment(Pos.CENTER);
-		setAlignment(Pos.CENTER);
-		setAlignment(Pos.CENTER);
-		setAlignment(Pos.CENTER);
-		setAlignment(Pos.CENTER);
 		getChildren().addAll(img, label1, label2);
 	}
 }

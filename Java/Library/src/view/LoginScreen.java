@@ -12,11 +12,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import library.admin.Administration;
 import library.admin.InvalidLoginException;
 
 public class LoginScreen extends Pane implements EventHandler<ActionEvent> {
 	
-	private Controller controller;
+	Controller controller;
 
 	public LoginScreen() {
 		this.setId("loginScreen");
@@ -26,6 +27,9 @@ public class LoginScreen extends Pane implements EventHandler<ActionEvent> {
 		img.setFitHeight(200);
 		img.setX(125);
 		img.setPreserveRatio(false);
+		
+		Administration admin = Administration.getInstance();
+		controller = admin.getController();
 		
 	    GridPane grid = new GridPane();
 	    grid.setAlignment(Pos.CENTER);
@@ -61,35 +65,14 @@ public class LoginScreen extends Pane implements EventHandler<ActionEvent> {
 	    grid.add(l3,0,3); grid.add(t3,1,3);
 	    grid.add(l4,0,4); grid.add(passwordField,1,4);
 	    grid.add(l5,1,5);	    
-	    
-	    /*passwordField.setOnAction(new EventHandler<ActionEvent>() {
-	        @Override public void handle(ActionEvent e) {
-	            if (!passwordField.getText().equals(t3.getText())) {
-	                l5.setText("Wrong Password");
-	                l5.setTextFill(Color.rgb(255, 0, 0));
-	            } else {
-	                l5.setText("Password correct");
-	                l5.setTextFill(Color.rgb(0, 255, 0));
-	            }
-	            passwordField.clear();
-	        }
-	        
-	    });*/
-	    
-	 
 
 	    getChildren().addAll(grid,img);
 	     
 	}
 
 	@Override
-	public void handle(ActionEvent event) {
-		try {
-			controller.checkPassword();
-		} catch (InvalidLoginException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
+	public void handle(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

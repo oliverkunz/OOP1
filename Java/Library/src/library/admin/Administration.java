@@ -41,7 +41,7 @@ public class Administration {
     }
     
     public Controller getController() {
-    	return controller;
+    	return this.controller;
     }
 
 	public Item findItem(long id) throws NoItemsFoundException, NoItemsFoundException {

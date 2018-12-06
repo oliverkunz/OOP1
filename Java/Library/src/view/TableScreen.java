@@ -67,5 +67,10 @@ public class TableScreen extends Pane {
 	    
 		getChildren().addAll(grid,img, table);
 	}
+	
+	public TableView getTable() {
+		// TODO Auto-generated method stub
+		return null;
+	    }
 
 }
