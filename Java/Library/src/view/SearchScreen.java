@@ -9,15 +9,19 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-public class SearchScreen extends Pane implements ChangeListener<String> {
+public class SearchScreen extends Pane implements ChangeListener<Toggle> {
 	
 	private Controller controller;
+	private ToggleGroup group;
+	
 	ObservableList<String> category;
 
 	public SearchScreen() {
@@ -43,16 +47,25 @@ public class SearchScreen extends Pane implements ChangeListener<String> {
 		grid.getColumnConstraints().addAll(col1, col2, col3);
 		grid.setGridLinesVisible(false);
 		
+		group = new ToggleGroup();
+		
 	    Label l1 = new Label("Kategorie");
 	    Label l2 = new Label("Suchtext");
 	    Label l3 = new Label("Schauspieler/in");
 	    ChoiceBox<String> c1 = new ChoiceBox<String>(category);
-	    c1.itemsProperty().bindBidirectional(controller.getCategories());
+	  //  c1.itemsProperty().bindBidirectional(controller.getCategories());
 	    TextField t2 = new TextField();
+	    t2.textProperty().bindBidirectional(controller.getTitle());
 	    TextField t3 = new TextField();
+	    t3.textProperty().bindBidirectional(controller.getWriterFirstName());
+	    t3.textProperty().bindBidirectional(controller.getActorFirstName());
 	    TextField t4 = new TextField();
-	    RadioButton r1 = new RadioButton("Nur Verfügbare");
-	    RadioButton r2 = new RadioButton("Alle");
+	    t4.textProperty().bindBidirectional(controller.getWriterLastName());
+	    t4.textProperty().bindBidirectional(controller.getActorLastName());
+	    RadioButton r1 = new RadioButton("Nur Verfügbare"); r1.setToggleGroup(group);
+	    RadioButton r2 = new RadioButton("Alle"); r2.setToggleGroup(group);
+	    
+	    group.selectedToggleProperty().addListener(this);
 	    
 	    grid.add(l1,0,1); grid.add(c1,1,1);
 	    grid.add(l2,0,2); grid.add(t2,1,2);
@@ -64,9 +77,12 @@ public class SearchScreen extends Pane implements ChangeListener<String> {
 	}
 
 	@Override
-	public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-		// TODO Auto-generated method stub
-		
+	public void changed(ObservableValue<? extends Toggle> ov, Toggle o, Toggle newValue) {		
+		if (group.getSelectedToggle() != null) {
+           // to do  RadioButton button = (r1, r2) group.getSelectedToggle();	
+        }
 	}
+
+	
 
 }

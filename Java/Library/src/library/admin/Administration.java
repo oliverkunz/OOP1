@@ -39,6 +39,10 @@ public class Administration {
     public LendingManager getLendingManager() {
     	return lendingManager;
     }
+    
+    public Controller getController() {
+    	return controller;
+    }
 
 	public Item findItem(long id) throws NoItemsFoundException, NoItemsFoundException {
 		return dataManager.findItem(id);
@@ -110,10 +114,6 @@ public class Administration {
 
 	public Customer[] getCustomers() {
 		return this.dataManager.getCustomers();
-	}
-
-	public Controller getController() {
-		return controller;
 	}
 
 }

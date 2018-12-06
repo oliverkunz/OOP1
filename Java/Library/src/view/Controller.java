@@ -1,31 +1,15 @@
 package view;
 
-import java.time.LocalDate;
-
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
-import javafx.scene.paint.Color;
 import library.admin.Administration;
 import library.admin.InvalidLoginException;
 import library.admin.NoItemsFoundException;
-import library.admin.Utils;
-import library.data.Actor;
-import library.data.Book;
 import library.data.BookItem;
 import library.data.Customer;
-import library.data.Film;
-import library.data.FilmItem;
 import library.data.Item;
-import library.data.Journal;
-import library.data.JournalItem;
-import library.data.Lending;
-import library.data.Music;
-import library.data.MusicItem;
-import library.data.State;
-import library.data.Writer;
 import main.OOP1Library;
 
 public class Controller {

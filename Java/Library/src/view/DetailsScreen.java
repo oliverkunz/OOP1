@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import library.data.Item;
 
 public class DetailsScreen extends Pane {
 	public DetailsScreen() {
@@ -20,5 +21,10 @@ public class DetailsScreen extends Pane {
 		l1.setPadding(new Insets(250, 25, 25, 100));
 
 		getChildren().addAll(img, l1);
+	}
+
+	public void setContent(Item selectedItem) {
+		// TODO Auto-generated method stub
+		
 	}
 }

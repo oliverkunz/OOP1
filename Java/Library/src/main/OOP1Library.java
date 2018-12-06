@@ -36,7 +36,7 @@ public class OOP1Library extends Application {
 		try {
 			admin = TestSetUp.testSetUp();
 			controller = admin.getController();
-			controller.setMain(this);
+		    controller.setMain(this);
 			panes = new Pane[controller.getNumberOfScreens()];
 			panes[0] = new IntroScreen();
 			panes[1] = new LoginScreen();

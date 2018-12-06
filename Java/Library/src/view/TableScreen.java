@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -53,7 +55,17 @@ public class TableScreen extends Pane {
 		grid.add(l4,0,4); grid.add(c4,1,4);
 		grid.add(l5,0,5); grid.add(c5,1,5);
 		grid.add(l6,0,6); grid.add(c6,1,6);
+		
+		TableView table = new TableView();
+	    table.setEditable(true);
+
+	    TableColumn firstNameCol = new TableColumn("First Name");
+	    TableColumn lastNameCol = new TableColumn("Last Name");
+	    TableColumn emailCol = new TableColumn("Email");
+	            
+	    table.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
 	    
-		getChildren().addAll(grid,img);
+		getChildren().addAll(grid,img, table);
 	}
+
 }
