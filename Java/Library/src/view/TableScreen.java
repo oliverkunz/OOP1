@@ -1,76 +1,62 @@
 package view;
 
-import javafx.geometry.Insets;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import library.admin.Administration;
+import library.data.Item;
 
-public class TableScreen extends Pane {
+public class TableScreen extends BorderPane implements ChangeListener<Item> {
+	TableView<Item> table;
+
 	public TableScreen() {
+
 		this.setId("tableScreen");
-		
-		ImageView img = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("res/library.jpg")));
-		img.setFitWidth(550);
-		img.setFitHeight(200);
-		img.setX(125);
-		img.setPreserveRatio(false);
-		
-		GridPane grid = new GridPane();
-		grid.setAlignment(Pos.CENTER);
-		grid.setVgap(10);
-		grid.setHgap(10);
-	    grid.setPadding(new Insets(200, 25, 25, 80)); //(top/right/bottom/left)
-	     
-	    ColumnConstraints col1 = new ColumnConstraints();
-		col1.setPercentWidth(33);
-		ColumnConstraints col2 = new ColumnConstraints();
-		col2.setPercentWidth(33);
-		grid.getColumnConstraints().addAll(col1, col2);
-		grid.setGridLinesVisible(false);
-		
-		Label l1 = new Label("Buch1|Titel1|Schreiber1|100");
-	    Label l2 = new Label("Buch2|Titel2|Schreiber2|200");
-	    Label l3 = new Label("Buch3|Titel3|Schreiber3|300");
-	    Label l4 = new Label("Buch4|Titel3|Schreiber4|400");
-	    Label l5 = new Label("Film10|Titel5|Spieler11|110");
-	    Label l6 = new Label("Film20|Titel6|Spieler12|129");
-		
-		CheckBox c1 = new CheckBox();
-		CheckBox c2 = new CheckBox();
-		CheckBox c3 = new CheckBox();
-		CheckBox c4 = new CheckBox();
-		CheckBox c5 = new CheckBox();
-		CheckBox c6 = new CheckBox();
-	    	    
-		grid.add(l1,0,1); grid.add(c1,1,1);
-		grid.add(l2,0,2); grid.add(c2,1,2);
-		grid.add(l3,0,3); grid.add(c3,1,3);
-		grid.add(l4,0,4); grid.add(c4,1,4);
-		grid.add(l5,0,5); grid.add(c5,1,5);
-		grid.add(l6,0,6); grid.add(c6,1,6);
-		
-		TableView table = new TableView();
-	    table.setEditable(true);
 
-	    TableColumn firstNameCol = new TableColumn("First Name");
-	    TableColumn lastNameCol = new TableColumn("Last Name");
-	    TableColumn emailCol = new TableColumn("Email");
-	            
-	    table.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
-	    
-		getChildren().addAll(grid,img, table);
+		HBox hbox = new HBox();
+		hbox.setAlignment(Pos.TOP_RIGHT);
+		ImageView img = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("res/imgk.jpg")));
+		hbox.getChildren().add(img);
+
+		VBox vbox = new VBox(10.0);
+		vbox.setMinHeight(100);
+		vbox.setMaxHeight(250);
+
+		table = new TableView<Item>();
+		TableColumn<Item, Long> idCol = new TableColumn<Item, Long>("Id");
+		idCol.setCellValueFactory(new PropertyValueFactory<Item, Long>("id"));
+		idCol.setMinWidth(180);
+		TableColumn<Item, String> titleCol = new TableColumn<Item, String>("Title");
+		titleCol.setCellValueFactory(new PropertyValueFactory<Item, String>("title"));
+		titleCol.setMinWidth(250);
+		table.getColumns().add(idCol);
+		table.getColumns().add(titleCol);
+
+		table.getSelectionModel().selectedItemProperty().addListener(this);
+		vbox.getChildren().add(table);
+		vbox.setAlignment(Pos.CENTER);
+		this.setTop(hbox);
+		this.setCenter(vbox);
 	}
-	
-	public TableView getTable() {
-		// TODO Auto-generated method stub
-		return null;
-	    }
 
+	public TableView<Item> getTable() {
+		return table;
+	}
+
+	@Override
+	public void changed(ObservableValue<? extends Item> ov, Item oldValue, Item newValue) {
+		if (table.getSelectionModel().getSelectedItem() != null) {
+			Controller controller = Administration.getInstance().getController();
+			controller.setSelectedItem(newValue);
+			controller.nextScreen();
+		}
+	}
 }

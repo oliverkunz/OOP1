@@ -1,7 +1,5 @@
 package view;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -13,9 +11,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import library.admin.Administration;
-import library.admin.InvalidLoginException;
 
-public class LoginScreen extends Pane implements EventHandler<ActionEvent> {
+public class LoginScreen extends Pane  {
 	
 	Controller controller;
 
@@ -58,7 +55,6 @@ public class LoginScreen extends Pane implements EventHandler<ActionEvent> {
 	    t3.textProperty().bindBidirectional(controller.getEmail());
 	    PasswordField passwordField = new PasswordField();
 	    passwordField.textProperty().bindBidirectional(controller.getPassword());
-	    passwordField.addEventHandler(ActionEvent.ACTION, this);
 	    
 	    grid.add(l1,0,1); grid.add(t1,1,1);
 	    grid.add(l2,0,2); grid.add(t2,1,2);
@@ -70,9 +66,4 @@ public class LoginScreen extends Pane implements EventHandler<ActionEvent> {
 	     
 	}
 
-	@Override
-	public void handle(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }

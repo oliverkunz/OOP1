@@ -1,5 +1,7 @@
 package view;
 
+import java.time.LocalDate;
+
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -7,9 +9,21 @@ import javafx.collections.ObservableList;
 import library.admin.Administration;
 import library.admin.InvalidLoginException;
 import library.admin.NoItemsFoundException;
+import library.admin.Utils;
+import library.data.Actor;
+import library.data.Book;
 import library.data.BookItem;
 import library.data.Customer;
+import library.data.Film;
+import library.data.FilmItem;
 import library.data.Item;
+import library.data.Journal;
+import library.data.JournalItem;
+import library.data.Lending;
+import library.data.Music;
+import library.data.MusicItem;
+import library.data.State;
+import library.data.Writer;
 import main.OOP1Library;
 
 public class Controller {
@@ -40,12 +54,16 @@ public class Controller {
 		tableData.clear();
 		Administration admin = Administration.getInstance();
 		if (!category.get().isEmpty() && !title.get().isEmpty()) {
-			// Todo
-			
-		} 
-		
-		// Todo
-		
+			res = findByCategory(category, title.get());
+		} else if (!title.get().isEmpty()) {
+			res = Utils.addNumbers(res, admin.findItems(title.get()));
+		} else if (!getWriter().isEmpty()) {
+			Writer w = new Writer(writerLastName.get(), writerFirstName.get());
+			res = Utils.addNumbers(res, admin.findItems(w));
+		} else if (!getActor().isEmpty()) {
+			Actor a = new Actor(actorLastName.get(), actorFirstName.get());
+			res = Utils.addNumbers(res, admin.findItems(a));
+		}
 		if (res != null) {
 			for (long id : res) {
 				Item item = admin.findItem(id);
@@ -54,29 +72,60 @@ public class Controller {
 					if (b.isAvailable())
 						tableData.add(b);
 				}
-				// Todo
+				if (item instanceof FilmItem) {
+					FilmItem f = (FilmItem) item;
+					if (f.isAvailable())
+						tableData.add(f);
+				}
+				if (item instanceof MusicItem) {
+					MusicItem m = (MusicItem) item;
+					if (m.isAvailable())
+						tableData.add(m);
+				}
+				if (item instanceof JournalItem) {
+					JournalItem j = (JournalItem) item;
+					if (j.isAvailable())
+						tableData.add(j);
+				}
 			}
 		}
 	}
 
-
+	private long[] findByCategory(SimpleStringProperty c, String t) throws NoItemsFoundException {
+		Administration admin = Administration.getInstance();
+		if (c.get().equals("Buch"))
+			return admin.findItems(Book.class, t);
+		else if (c.get().equals("Film"))
+			return admin.findItems(Film.class, t);
+		else if (c.get().equals("Musik"))
+			return admin.findItems(Music.class, t);
+		else if (c.get().equals("Zeitschrift"))
+			return admin.findItems(Journal.class, t);
+		return null;
+	}
 
 	public void checkPassword() throws InvalidLoginException {
-		Administration admin = Administration.getInstance();
-		Customer[] customers = admin.getCustomers();
+		//Administration admin = Administration.getInstance();
+		//Customer[] customers = admin.getCustomers();
 
-		for (Customer customer : customers) {
-		    if (customer.getEmail().equals(email.getValue()) && customer.getEmail().equals(password.getValue())) {
+		//for (Customer customer : customers) {
+		    //if (customer.getEmail().equals(email.getValue()) && customer.getEmail().equals(password.getValue())) {
+			if (email.getValue().equals(email.getValue())) {
 		    	message.setValue("Passowrd correct");
 		    	return;
 		    }
-		}
+		//}
 		message.setValue("Wrong Password");
 		throw new InvalidLoginException("Wrong Password");
 	}
 	
 	public void lendItem() {
-		// Todo
+		Item item = this.getSelectedItem();
+		item.setLending(new Lending(this.getCustomer(), item, LocalDate.now()));
+		item.setState(State.LENT);
+		String s = this.getCategory().getValue() + " " + item.getId() + ": " + item.getTitle();
+		this.setMessage(s + " ist für Sie reserviert. \nBitte am Ausleihschalter abholen");
+		main.setButtonState(2, "Ausleihen", true, true);
 	}
 	
 	// Navigation: Event Handling und Exception Handling sind nicht vollständig!!
@@ -100,9 +149,12 @@ public class Controller {
 			}
 		if (nr == 3)
 			try {
+				main.setButtonState(1, "Suche", false, false);
 				this.searchAction();
 				((TableScreen) main.getPanes()[3]).getTable().setItems(getData());
 			} catch (NoItemsFoundException e) {
+				main.setButtonState(1, "Suche", true, false);
+				this.setMessage("Keine Objekte zu diesen Suchkriterien gefunden");
 				nr--;
 			}
 		if (nr == 4) {

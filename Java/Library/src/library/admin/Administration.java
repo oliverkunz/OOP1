@@ -30,6 +30,7 @@ public class Administration {
 	private Administration() {
 		dataManager = new DataManager();
 		lendingManager = new LendingManager();
+		controller = new Controller();
 	}
 	
     public DataManager getDataManager() {

@@ -11,18 +11,23 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import library.admin.Administration;
 
-public class SearchScreen extends Pane  {
+public class SearchScreen extends Pane implements ChangeListener<String> {
 	
 	private Controller controller;
 
 	public SearchScreen() {
 		this.setId("searchScreen");
+		
+		Administration admin = Administration.getInstance();
+		controller = admin.getController();
 
 		ImageView img = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("res/library.jpg")));
 		img.setFitWidth(550);
@@ -42,18 +47,17 @@ public class SearchScreen extends Pane  {
 		grid.getColumnConstraints().addAll(col1, col2, col3);
 		grid.setGridLinesVisible(false);
 		
-		final ToggleGroup stateG = new ToggleGroup();
-		stateG.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-		    public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle, Toggle new_toggle) {
-			if (new_toggle != null)
-			    System.out.println(stateG.getSelectedToggle().getUserData());
-		    }
-		});
 		
 	    Label l1 = new Label("Kategorie");
 	    Label l2 = new Label("Suchtext");
 	    Label l3 = new Label("Schauspieler/in");
-	    ChoiceBox<String> c1 = new ChoiceBox<String>();
+	    
+	    ChoiceBox<String> c1 = new ChoiceBox<>(controller.getCategories());
+		c1.getSelectionModel().selectedItemProperty().addListener(this);
+
+		c1.setTooltip(new Tooltip("Kategorie wählen"));
+		c1.setMinWidth(300);
+		
 	    TextField t2 = new TextField();
 	    t2.textProperty().bindBidirectional(controller.getTitle());
 	    TextField t3 = new TextField();
@@ -63,40 +67,48 @@ public class SearchScreen extends Pane  {
 	    t4.textProperty().bindBidirectional(controller.getWriterLastName());
 	    t4.textProperty().bindBidirectional(controller.getActorLastName());
 	    
-	    RadioButton r1 = new RadioButton("Nur Verfügbare"); r1.setToggleGroup(stateG);
-	    r1.setSelected(true);
-		r1.setUserData("available");
-	    RadioButton r2 = new RadioButton("Alle"); r2.setToggleGroup(stateG);
-	    r2.setUserData("all");
+	    ToggleGroup group = new ToggleGroup();
+		RadioButton rb1 = new RadioButton();
+		rb1.setToggleGroup(group);
+		rb1.setText("Nur Verfügare");
+		rb1.setSelected(true);
+		RadioButton rb2 = new RadioButton();
+		rb2.setText("Alle");
+		rb2.setToggleGroup(group);
 	    
-	    c1.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-		    @Override
-		    public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-			System.out.println(c1.getItems().get((Integer) number2));
-			switch (c1.getItems().get((Integer) number2)) {
-			case "Bücher":
-			    grid.getChildren().setAll(new TextField());
-			    break;
-			case "Zeitschriften":
-			    grid.getChildren().setAll(new TextField());
-			    break;
-			case "Musik":
-			    grid.getChildren().setAll(new TextField());
-			    break;
-			case "Filme":
-			    grid.getChildren().setAll(t3, t4);
-			    break;
-			}
-		    }
-		});
+	       
 	    
 	    grid.add(l1,0,1); grid.add(c1,1,1);
 	    grid.add(l2,0,2); grid.add(t2,1,2);
 	    grid.add(l3,0,3); grid.add(t3,1,3); grid.add(t4,2,3);
-	    grid.add(r1,1,4); grid.add(r2,2,4);
+	    grid.add(rb1,1,4); grid.add(rb2,2,4);
 	    
 		getChildren().addAll(grid,img);
 
+		@Override
+		public void changed(ObservableValue<? extends String> arg0, String oldValue, String newValue) {
+			controller.setCategory(newValue);
+			if(newValue == "Buch") {
+				l4.setText("Schriftsteller/in");
+				getChildren().remove(t3,t4);
+				add(box1, 1, 5, 2, 1);
+			}
+			else if(newValue == "Film") {
+				l4.setText("Schauspieler/in");
+				getChildren().remove(box1);
+				add(box2, 1, 5, 2, 1);
+			}
+			else {
+				l4.setText("  ");
+				getChildren().remove(box2);
+				getChildren().remove(box1);
+			}
+		}
 	}
 
+	@Override
+	public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -51,12 +51,12 @@ public class OOP1Library extends Application {
 	@Override
 	public void start(Stage stage) {
 		stage.setTitle("OOP1 Library System");
-		stage.setWidth(750);
-		stage.setHeight(530);
+		stage.setWidth(800);
+		stage.setHeight(600);
 
 		BorderPane root = new BorderPane();
 		mainPane = new HBox();
-		mainPane.setMaxWidth(750);
+		mainPane.setMaxWidth(800);
 		mainPane.getChildren().add(panes[0]);
 		button1 = new Button("Next");
 		button1.setDefaultButton(true);

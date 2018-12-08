@@ -63,4 +63,7 @@ public abstract class Item implements Comparable<Item> {
 		return Long.compare(this.id, item.id);
     }
 
+	public String getTitle() {
+    	return getObject().getTitle();
+    }
 }
